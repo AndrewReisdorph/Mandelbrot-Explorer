@@ -139,6 +139,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ColorChannelCtrl.h" />
+    <ClInclude Include="ColorChannelGraph.h" />
+    <ClInclude Include="ColorControlPanel.h" />
+    <ClInclude Include="ColorDisplayPanel.h" />
+    <ClInclude Include="ColorPreviewPanel.h" />
+    <ClInclude Include="CustomResolutionDialog.h" />
+    <ClInclude Include="images.h" />
+    <ClInclude Include="main.h" />
+    <ClInclude Include="MandelControlPanel.h" />
+    <ClInclude Include="MandelFractal.h" />
+    <ClInclude Include="MandelShitWindow.h" />
+    <ClInclude Include="MandelView.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ColorChannelCtrl.cpp" />
+    <ClCompile Include="ColorChannelGraph.cpp" />
+    <ClCompile Include="ColorControlPanel.cpp" />
+    <ClCompile Include="ColorDisplayPanel.cpp" />
+    <ClCompile Include="ColorPreviewPanel.cpp" />
+    <ClCompile Include="CustomResolutionDialog.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="MandelControlPanel.cpp" />
+    <ClCompile Include="MandelFractal.cpp" />
+    <ClCompile Include="MandelShitWindow.cpp" />
+    <ClCompile Include="MandelView.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
