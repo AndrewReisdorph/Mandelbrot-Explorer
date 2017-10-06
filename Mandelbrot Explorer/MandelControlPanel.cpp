@@ -13,7 +13,7 @@
 
 using namespace std;
 
-MandelControlPanel::MandelControlPanel(MandelShitWindow *parent, int id):wxPanel(parent, id)
+MandelControlPanel::MandelControlPanel(MandelbrotExplorerWindow *parent, int id):wxPanel(parent, id)
 {
 	parent_ = parent;
 	render_state_ = RENDER_IDLE;

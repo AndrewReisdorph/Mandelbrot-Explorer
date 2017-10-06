@@ -45,10 +45,10 @@
     <ClInclude Include="MandelControlPanel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MandelShitWindow.h">
+    <ClInclude Include="MandelView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MandelView.h">
+    <ClInclude Include="MandelbrotExplorerWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -80,10 +80,10 @@
     <ClCompile Include="MandelFractal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MandelShitWindow.cpp">
+    <ClCompile Include="MandelView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MandelView.cpp">
+    <ClCompile Include="MandelbrotExplorerWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

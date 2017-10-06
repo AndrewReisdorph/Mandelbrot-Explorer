@@ -1,10 +1,10 @@
-#include "MandelShitWindow.h"
+#include "MandelbrotExplorerWindow.h"
 #include "MandelControlPanel.h"
 #include "MandelView.h"
 #include "ColorControlPanel.h"
 #include "main.h"
 
-MandelShitWindow::MandelShitWindow(const wxString& title) : wxFrame(NULL, wxID_ANY, title)
+MandelbrotExplorerWindow::MandelbrotExplorerWindow(const wxString& title) : wxFrame(NULL, wxID_ANY, title)
 {
 	MainVSizer = new wxBoxSizer(wxVERTICAL);
 	wxBoxSizer *HSizer = new wxBoxSizer(wxHORIZONTAL);
@@ -44,29 +44,27 @@ MandelShitWindow::MandelShitWindow(const wxString& title) : wxFrame(NULL, wxID_A
 
 }
 
-void MandelShitWindow::OnExit(wxCommandEvent& event)
+void MandelbrotExplorerWindow::OnExit(wxCommandEvent& event)
 {
 	Close(TRUE);
 }
 
-void MandelShitWindow::Render(wxCommandEvent& event)
+void MandelbrotExplorerWindow::Render(wxCommandEvent& event)
 {
 	m_MandelView->Render();
 }
 
-void MandelShitWindow::SetStatusBarText(wxString StatusText)
+void MandelbrotExplorerWindow::SetStatusBarText(wxString StatusText)
 {
 	SetStatusText(StatusText, 0);
 }
 
-void MandelShitWindow::DoVideo(wxCommandEvent& event)
+void MandelbrotExplorerWindow::DoVideo(wxCommandEvent& event)
 {
 	m_MandelView->RenderVideo();
 }
 
-BEGIN_EVENT_TABLE(MandelShitWindow, wxFrame)
-//EVT_BUTTON(BUTTON_Render, MandelShitWindow::Render)
-EVT_MENU(ID_Quit, MandelShitWindow::OnExit)
-//EVT_MENU(ID_SaveImage, MandelShitWindow::SaveImage)
-EVT_MENU(ID_RenderVideo, MandelShitWindow::DoVideo)
+BEGIN_EVENT_TABLE(MandelbrotExplorerWindow, wxFrame)
+EVT_MENU(ID_Quit, MandelbrotExplorerWindow::OnExit)
+EVT_MENU(ID_RenderVideo, MandelbrotExplorerWindow::DoVideo)
 END_EVENT_TABLE()

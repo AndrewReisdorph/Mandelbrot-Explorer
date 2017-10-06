@@ -1,12 +1,12 @@
 #include "main.h"
 #include <mpir.h>
-#include "MandelShitWindow.h"
+#include "MandelbrotExplorerWindow.h"
 #include <iomanip>
 
-wxIMPLEMENT_APP_CONSOLE(MandelShitApp);
+wxIMPLEMENT_APP_CONSOLE(MandelbrotExplorerApp);
 using namespace std;
 
-bool MandelShitApp::OnInit()
+bool MandelbrotExplorerApp::OnInit()
 {
 
 	//0.00000000000000000000383851705185637665293
@@ -19,7 +19,7 @@ bool MandelShitApp::OnInit()
 	*/
 	mpf_set_default_prec(512);
 	std::cout << "precision: " << mpf_get_default_prec() << std::endl;
-	wxFrame* window = new MandelShitWindow("MandelShit");
+	wxFrame* window = new MandelbrotExplorerWindow("Mandelbrot Explorer");
 	window->Show();
 
 	return true;

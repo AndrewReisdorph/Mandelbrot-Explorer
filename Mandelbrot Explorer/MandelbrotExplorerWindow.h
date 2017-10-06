@@ -7,7 +7,7 @@
 class MandelViewPanel;
 class ColorControlPanel;
 
-class MandelShitWindow : public wxFrame
+class MandelbrotExplorerWindow : public wxFrame
 {
 private:
 	void Render(wxCommandEvent& event);
@@ -26,7 +26,7 @@ private:
 
 public:
 	void SetStatusBarText(wxString StatusText);
-	MandelShitWindow(const wxString& title);
+	MandelbrotExplorerWindow(const wxString& title);
 	
 	DECLARE_EVENT_TABLE()
 };

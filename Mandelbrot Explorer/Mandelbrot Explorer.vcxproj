@@ -152,7 +152,7 @@
     <ClInclude Include="main.h" />
     <ClInclude Include="MandelControlPanel.h" />
     <ClInclude Include="MandelFractal.h" />
-    <ClInclude Include="MandelShitWindow.h" />
+    <ClInclude Include="MandelbrotExplorerWindow.h" />
     <ClInclude Include="MandelView.h" />
   </ItemGroup>
   <ItemGroup>
@@ -165,7 +165,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MandelControlPanel.cpp" />
     <ClCompile Include="MandelFractal.cpp" />
-    <ClCompile Include="MandelShitWindow.cpp" />
+    <ClCompile Include="MandelbrotExplorerWindow.cpp" />
     <ClCompile Include="MandelView.cpp" />
   </ItemGroup>
   <ItemGroup>

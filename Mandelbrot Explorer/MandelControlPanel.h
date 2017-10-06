@@ -9,10 +9,10 @@
 #include <wx/spinctrl.h>
 #include <wx/statline.h>
 #include "main.h"
-#include "MandelShitWindow.h"
+#include "MandelbrotExplorerWindow.h"
 #include "MandelView.h"
 
-class MandelShitWindow;
+class MandelbrotExplorerWindow;
 
 #define NUM_RESOLUTION_OPTIONS 5
 #define NUM_FRACTAL_OPTIONS 2
@@ -62,7 +62,7 @@ private:
 	wxBitmapButton    *m_videoButton;
 	wxBitmapButton    *m_SaveButton;
 
-	MandelShitWindow  *parent_;
+	MandelbrotExplorerWindow  *parent_;
 	ColorPreviewPanel *m_ColorPreviewPanel;
 	MandelViewPanel   *m_MandelView;
 
@@ -77,7 +77,7 @@ private:
 	void OnSaveButtonClick(wxCommandEvent& event);
 
 public:
-	MandelControlPanel(MandelShitWindow *parent, int id);
+	MandelControlPanel(MandelbrotExplorerWindow *parent, int id);
 	RenderSettings GetRenderSettings();
 	void SetMandelView(MandelViewPanel *MandelView);
 	void OnColorModeSelect(wxCommandEvent& event);

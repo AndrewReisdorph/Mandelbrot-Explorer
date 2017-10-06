@@ -42,7 +42,7 @@ typedef struct Wave
 	double period;
 } Wave;
 
-class MandelShitApp : public wxApp
+class MandelbrotExplorerApp : public wxApp
 {
 public:
 	bool OnInit();

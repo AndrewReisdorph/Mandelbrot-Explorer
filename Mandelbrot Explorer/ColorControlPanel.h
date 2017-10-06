@@ -1,13 +1,13 @@
 #pragma once
 #include <wx/wx.h>
-#include "MandelShitWindow.h"
+#include "MandelbrotExplorerWindow.h"
 #include "ColorChannelGraph.h"
 #include "ColorChannelCtrl.h"
 #include "ColorDisplayPanel.h"
 
 #define NUM_COLOR_MODES 2
 
-class MandelShitWindow;
+class MandelbrotExplorerWindow;
 class ColorChannelCtrl;
 class ColorDisplayPanel;
 
@@ -17,7 +17,7 @@ private:
 	wxString m_ColorModeOptions[NUM_COLOR_MODES] = { "Waves", "Dropper" };
 
 
-	MandelShitWindow *m_parent;
+	MandelbrotExplorerWindow *m_parent;
 	ColorChannelGraph *m_ChannelGraph;
 	ColorDisplayPanel *m_ColorDisplay;
 	ColorChannelCtrl *m_RedChannelCtrl;
@@ -27,6 +27,6 @@ private:
 	void InitializeUI();
 
 public:
-	ColorControlPanel(MandelShitWindow *parent);
+	ColorControlPanel(MandelbrotExplorerWindow *parent);
 	void UpdateChannelSettings();
 };

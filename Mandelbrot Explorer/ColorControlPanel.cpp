@@ -2,7 +2,7 @@
 #include "ColorChannelGraph.h"
 #include "main.h"
 
-ColorControlPanel::ColorControlPanel(MandelShitWindow *parent) :wxPanel(parent)
+ColorControlPanel::ColorControlPanel(MandelbrotExplorerWindow *parent) :wxPanel(parent)
 {
 	m_parent = parent;
 
