@@ -409,6 +409,7 @@ RenderSettings MandelControlPanel::GetRenderSettings()
 	settings.SuperSamplingRate = sample_rate_spinner_->GetValue();
 	settings.NumThreads = m_ThreadCountSpinCtrl->GetValue();
 #if 1
+	settings.ColorMode = CONTINUOUS;
 	settings.Red = 172;
 	settings.Green = 217;
 	settings.Blue = 28;

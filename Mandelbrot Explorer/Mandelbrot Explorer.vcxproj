@@ -72,6 +72,9 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\mpir-3.0.0\lib\Win32\Debug;C:\wxWidgets-3.1.0\include\msvc;C:\wxWidgets-3.1.0\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\mpir-3.0.0\build.vc15\lib_mpir_cxx\Win32\Debug;C:\mpir-3.0.0\build.vc15\lib_mpir_gc\Win32\Debug;C:\mpir-3.0.0\build.vc15\dll_mpir_gc\Win32\Debug;C:\wxWidgets-3.1.0\lib;C:\wxWidgets-3.1.0\lib\vc_lib;$(LibraryPath)</LibraryPath>
+    <ReferencePath>C:\mpir-3.0.0\build.vc15\dll_mpir_gc\Win32\Debug;$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -164,6 +167,9 @@
     <ClCompile Include="MandelFractal.cpp" />
     <ClCompile Include="MandelShitWindow.cpp" />
     <ClCompile Include="MandelView.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="mpir.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
