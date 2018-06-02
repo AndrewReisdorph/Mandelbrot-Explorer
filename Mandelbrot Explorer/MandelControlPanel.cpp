@@ -291,7 +291,7 @@ void MandelControlPanel::OnResolutionSelect(wxCommandEvent& event)
 			CustomResolutionDialog *ResolutionDialog = new CustomResolutionDialog();
 			ResolutionDialog->Show(true);
 			int ReturnCode = ResolutionDialog->GetReturnCode();
-			std:cout << "ReturnCode: " << ReturnCode << std::endl;
+			std::cout << "ReturnCode: " << ReturnCode << std::endl;
 			if (ReturnCode == wxOK)
 			{
 				NewWidth = ResolutionDialog->GetWidth();

@@ -87,9 +87,4 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <Library Include="mpir.lib">
-      <Filter>Source Files</Filter>
-    </Library>
-  </ItemGroup>
 </Project>
