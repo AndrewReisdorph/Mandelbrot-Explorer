@@ -1,4 +1,3 @@
-#pragma once
 #include "ColorControlPanel.h"
 #include "ColorDisplayPanel.h"
 #include <wx/dcbuffer.h>

@@ -4,10 +4,13 @@
 #include <algorithm>
 #include "MandelFractal.h"
 #include "main.h"
+#ifdef __linux__
+#elif __APPLE__
+#else
 #include "cudaWorker.cuh"
 #include <cuda.h>
-
 extern __global__ void CUDAFractalWorker(mpf_t leftX, mpf_t topI, mpf_t pixelCoordinateDelta, mpf_t SuperSampleCoordinateDelta, int frameWidth, int frameHeight, int MaxIterations, int SampleRate, int Precision, uint32_t *HostIterations, double *HostMagnitudes);
+#endif
 
 bool flag = false;
 
@@ -348,7 +351,10 @@ bool MandelFractal::RenderFractal(unsigned char * ImageData)
 
 	if (settings.UseGPU)
 	{
-		uint32_t arrayCount = m_PixelWidth * m_PixelHeight;
+#ifdef __linux__
+#elif __APPLE__
+#else
+				uint32_t arrayCount = m_PixelWidth * m_PixelHeight;
 		uint32_t *iterations = new uint32_t[arrayCount];
 		double *magnitudes = new double[arrayCount];
 
@@ -371,6 +377,7 @@ bool MandelFractal::RenderFractal(unsigned char * ImageData)
 
 		delete magnitudes;
 		delete iterations;
+#endif
 	}
 	else
 	{

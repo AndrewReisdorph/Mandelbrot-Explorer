@@ -97,18 +97,14 @@ void MandelControlPanel::InitializeUI()
 
 	wxStaticText *IterationsText = new wxStaticText(this, wxID_ANY, "Iterations:");
 	m_IterationsSpinCtrl = new wxSpinCtrl(this, wxID_ANY);
-	m_IterationsSpinCtrl->SetMin(1);
-	m_IterationsSpinCtrl->SetMax(65535);
-	m_IterationsSpinCtrl->SetValue(100);
+	m_IterationsSpinCtrl->SetRange(1, 65535);
 
 	AppearanceFlexSizer->Add(IterationsText, wxSizerFlags().CenterVertical());
 	AppearanceFlexSizer->Add(m_IterationsSpinCtrl, wxSizerFlags().Expand());
 
 	wxStaticText *sample_rate_text = new wxStaticText(this, wxID_ANY, "Sample Rate:");
 	sample_rate_spinner_ = new wxSpinCtrl(this, wxID_ANY);
-	sample_rate_spinner_->SetMin(1);
-	sample_rate_spinner_->SetMax(1000);
-	sample_rate_spinner_->SetValue(2);
+	sample_rate_spinner_->SetRange(1, 1000);
 
 	AppearanceFlexSizer->Add(sample_rate_text, wxSizerFlags().CenterVertical());
 	AppearanceFlexSizer->Add(sample_rate_spinner_, wxSizerFlags().Expand());
@@ -123,8 +119,7 @@ void MandelControlPanel::InitializeUI()
 
 	wxStaticText *ThreadCountStaticText = new wxStaticText(this, wxID_ANY, "Threads:");
 	m_ThreadCountSpinCtrl = new wxSpinCtrl(this, wxID_ANY);
-	m_ThreadCountSpinCtrl->SetMin(1);
-	m_ThreadCountSpinCtrl->SetMax(10);
+	m_ThreadCountSpinCtrl->SetRange(1, 32);
 	m_ThreadCountSpinCtrl->SetValue(2);
 
 	AppearanceFlexSizer->Add(ThreadCountStaticText, wxSizerFlags().CenterVertical());
