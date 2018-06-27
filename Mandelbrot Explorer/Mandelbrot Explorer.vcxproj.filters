@@ -51,6 +51,9 @@
     <ClInclude Include="MandelbrotExplorerWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="cudaWorker.cuh">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ColorChannelCtrl.cpp">
@@ -86,5 +89,10 @@
     <ClCompile Include="MandelbrotExplorerWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="kernel.cu">
+      <Filter>Source Files</Filter>
+    </CudaCompile>
   </ItemGroup>
 </Project>

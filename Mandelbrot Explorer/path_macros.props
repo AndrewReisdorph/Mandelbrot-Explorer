@@ -4,6 +4,7 @@
   <PropertyGroup Label="UserMacros">
     <wxDir>C:\libs\wxWidgets-3.1.1</wxDir>
     <mpirDir>C:\libs\mpir-3.0.0</mpirDir>
+    <rapidjsonDir>C:\libs\rapidjson</rapidjsonDir>
   </PropertyGroup>
   <PropertyGroup />
   <ItemDefinitionGroup />
@@ -14,6 +15,9 @@
     </BuildMacro>
     <BuildMacro Include="mpirDir">
       <Value>$(mpirDir)</Value>
+    </BuildMacro>
+    <BuildMacro Include="rapidjsonDir">
+      <Value>$(rapidjsonDir)</Value>
     </BuildMacro>
   </ItemGroup>
 </Project>

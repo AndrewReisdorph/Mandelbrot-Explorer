@@ -16,7 +16,7 @@ class MandelbrotExplorerWindow;
 
 #define NUM_RESOLUTION_OPTIONS 5
 #define NUM_FRACTAL_OPTIONS 2
-
+#define NUM_HARDWARE_OPTIONS 2
 
 enum RenderState
 {
@@ -34,7 +34,9 @@ private:
 	wxString m_FractalChoices[NUM_FRACTAL_OPTIONS] = {"Mandelbrot", "Julia"};
 	int m_ResolutionValues[NUM_RESOLUTION_OPTIONS - 1][2] = { {854,480}, {1280,720}, {1920,1080}, {3480,2160} };
 	wxString m_ResolutionOptions[NUM_RESOLUTION_OPTIONS] = { "854x480", "1280x720", "1920x1080", "3480x2160", "Custom" };
+	wxString m_HardwareOptions[NUM_HARDWARE_OPTIONS] = { "CPU", "GPU" };
 	int m_CurrentResolutionSelection;
+	int m_CurrentHardwareSelection;
 
 	wxSpinCtrl        *sample_rate_spinner_;
 	wxSpinCtrl        *m_ThreadCountSpinCtrl;
@@ -68,15 +70,17 @@ private:
 
 	void InitializeUI();
 	void OnColorSliderScroll(wxCommandEvent& event);
-	void GetHumanReadableMPFString(mpf_t &Num, char *buffer);
 	void OnRenderButtonClick(wxCommandEvent& event);
 	void OnResolutionSelect(wxCommandEvent& event);
 	void OnPlayPauseButtonClick(wxCommandEvent& event);
 	void OnVideoButtonClick(wxCommandEvent& event);
 	void OnAbortButtonClick(wxCommandEvent& event);
 	void OnSaveButtonClick(wxCommandEvent& event);
+	void OnHardwareSelect(wxCommandEvent& event);
 
 public:
+	bool RenderInProgress();
+	void GetHumanReadableMPFString(mpf_t &Num, char *buffer);
 	MandelControlPanel(MandelbrotExplorerWindow *parent, int id);
 	RenderSettings GetRenderSettings();
 	void SetMandelView(MandelViewPanel *MandelView);

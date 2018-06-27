@@ -76,14 +76,14 @@ void MandelViewPanel::OnMouseMove(wxMouseEvent& event)
 
 		mpf_clear(x);
 		mpf_clear(y);
-	}
 
-	if (m_BoxStart.Active && event.Dragging())
-	{
-		m_BoxEnd.x = MousePosition.x;
-		m_BoxEnd.y = MousePosition.y;
-		m_BoxEnd.Active = true;
-		Refresh();
+		if (!m_ControlPanel->RenderInProgress() && m_BoxStart.Active && event.Dragging())
+		{
+			m_BoxEnd.x = MousePosition.x;
+			m_BoxEnd.y = MousePosition.y;
+			m_BoxEnd.Active = true;
+			Refresh();
+		}
 	}
 
 	event.Skip();
@@ -91,26 +91,33 @@ void MandelViewPanel::OnMouseMove(wxMouseEvent& event)
 
 void MandelViewPanel::OnMouseLeftDown(wxMouseEvent& event)
 {
-	wxPoint MousePosition = event.GetPosition();
-	m_BoxStart.x = MousePosition.x;
-	m_BoxStart.y = MousePosition.y;
-	m_BoxStart.Active = true;
+	if (!m_ControlPanel->RenderInProgress())
+	{
+		wxPoint MousePosition = event.GetPosition();
+		m_BoxStart.x = MousePosition.x;
+		m_BoxStart.y = MousePosition.y;
+		m_BoxStart.Active = true;
+	}
+
 	event.Skip();
 
 }
 
 void MandelViewPanel::OnMouseLeftUp(wxMouseEvent& event)
 {
-	m_BoxStart.Active = false;
-	m_BoxEnd.Active = false;
+	if (!m_ControlPanel->RenderInProgress())
+	{
+		m_BoxStart.Active = false;
+		m_BoxEnd.Active = false;
 
-	Refresh();
-	CropImageToSelectionAndZoom();
-	Refresh();
+		Refresh();
+		CropImageToSelectionAndZoom();
+		Refresh();
 
-	m_ControlPanel->SetRenderState(RENDER_ACTIVE);
+		m_ControlPanel->SetRenderState(RENDER_ACTIVE);
 
-	RenderSelection();
+		RenderSelection();
+	}
 	event.Skip();
 
 }

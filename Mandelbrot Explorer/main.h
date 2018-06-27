@@ -29,6 +29,7 @@ typedef struct RenderSettings
 	int Red;
 	int Green;
 	int Blue;
+	bool UseGPU;
 	ColorModes ColorMode;
 	mpf_t PlotHeight;
 	mpf_t PlotWidth;

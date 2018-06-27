@@ -77,7 +77,7 @@ void MandelControlPanel::InitializeUI()
 
 	main_vbox->Add(toolbarHBox);
 
-	wxFlexGridSizer *AppearanceFlexSizer = new wxFlexGridSizer(5,2,5,5);
+	wxFlexGridSizer *AppearanceFlexSizer = new wxFlexGridSizer(6,2,5,5);
 	AppearanceFlexSizer->AddGrowableCol(1);
 
 	wxStaticText *fractal_select_text = new wxStaticText(this, wxID_ANY, "Fractal:");
@@ -112,6 +112,14 @@ void MandelControlPanel::InitializeUI()
 
 	AppearanceFlexSizer->Add(sample_rate_text, wxSizerFlags().CenterVertical());
 	AppearanceFlexSizer->Add(sample_rate_spinner_, wxSizerFlags().Expand());
+
+	wxStaticText *hardwareSelectText = new wxStaticText(this, wxID_ANY, "Hardware:");
+	wxChoice *HardwareSelectDropdown = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, NUM_HARDWARE_OPTIONS, m_HardwareOptions);
+	m_CurrentHardwareSelection = 0;
+	HardwareSelectDropdown->SetSelection(m_CurrentHardwareSelection);
+	HardwareSelectDropdown->Bind(wxEVT_CHOICE, &MandelControlPanel::OnHardwareSelect, this);
+	AppearanceFlexSizer->Add(hardwareSelectText, wxSizerFlags().CenterVertical());
+	AppearanceFlexSizer->Add(HardwareSelectDropdown, wxSizerFlags().Expand());
 
 	wxStaticText *ThreadCountStaticText = new wxStaticText(this, wxID_ANY, "Threads:");
 	m_ThreadCountSpinCtrl = new wxSpinCtrl(this, wxID_ANY);
@@ -278,7 +286,7 @@ void MandelControlPanel::OnResolutionSelect(wxCommandEvent& event)
 {
 	int ResolutionSelection = event.GetSelection();
 
-	if (ResolutionSelection != m_CurrentResolutionSelection)
+	if (ResolutionSelection != m_CurrentResolutionSelection || (m_ResolutionOptions[ResolutionSelection].Cmp("Custom") == 0))
 	{
 		int NewWidth = 0;
 		int NewHeight = 0;
@@ -291,7 +299,7 @@ void MandelControlPanel::OnResolutionSelect(wxCommandEvent& event)
 			CustomResolutionDialog *ResolutionDialog = new CustomResolutionDialog();
 			ResolutionDialog->Show(true);
 			int ReturnCode = ResolutionDialog->GetReturnCode();
-			std::cout << "ReturnCode: " << ReturnCode << std::endl;
+			std:cout << "ReturnCode: " << ReturnCode << std::endl;
 			if (ReturnCode == wxOK)
 			{
 				NewWidth = ResolutionDialog->GetWidth();
@@ -372,6 +380,17 @@ void MandelControlPanel::OnSaveButtonClick(wxCommandEvent & event)
 	m_MandelView->SaveImage();
 }
 
+void MandelControlPanel::OnHardwareSelect(wxCommandEvent & event)
+{
+	int HardwareSelection = event.GetSelection();
+
+	if (HardwareSelection != m_CurrentHardwareSelection)
+	{
+		
+	}
+	m_CurrentHardwareSelection = HardwareSelection;
+}
+
 void MandelControlPanel::UpdateRenderTimeInfo(chrono::duration<double> timeElapsed, chrono::duration<double> TimeRemaining)
 {
 	ostringstream stream;
@@ -408,6 +427,7 @@ RenderSettings MandelControlPanel::GetRenderSettings()
 	settings.Iterations = m_IterationsSpinCtrl->GetValue();
 	settings.SuperSamplingRate = sample_rate_spinner_->GetValue();
 	settings.NumThreads = m_ThreadCountSpinCtrl->GetValue();
+	settings.UseGPU = (m_CurrentHardwareSelection == 1);
 #if 1
 	settings.ColorMode = CONTINUOUS;
 	settings.Red = 172;
@@ -453,6 +473,11 @@ void MandelControlPanel::OnColorSliderScroll(wxCommandEvent& event)
 void MandelControlPanel::RefreshPlot()
 {
 	m_parent->Refresh();
+}
+
+bool MandelControlPanel::RenderInProgress()
+{
+	return (render_state_ == RENDER_ACTIVE) || (render_state_ == RENDER_PAUSE);
 }
 
 void MandelControlPanel::GetHumanReadableMPFString(mpf_t &Num, char *buffer)

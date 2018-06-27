@@ -4,6 +4,10 @@
 #include <algorithm>
 #include "MandelFractal.h"
 #include "main.h"
+#include "cudaWorker.cuh"
+#include <cuda.h>
+
+extern __global__ void CUDAFractalWorker(mpf_t leftX, mpf_t topI, mpf_t pixelCoordinateDelta, mpf_t SuperSampleCoordinateDelta, int frameWidth, int frameHeight, int MaxIterations, int SampleRate, int Precision, uint32_t *HostIterations, double *HostMagnitudes);
 
 bool flag = false;
 
@@ -256,6 +260,8 @@ void MandelFractal::PanelCoordinateToComplex(int panel_x, int panel_y, mpf_t &x,
 	mpf_clear(ImaginaryOffset);
 }
 
+
+
 bool MandelFractal::RenderFractal(unsigned char * ImageData)
 {
 	RenderSettings settings = m_ControlPanel->GetRenderSettings();
@@ -338,20 +344,52 @@ bool MandelFractal::RenderFractal(unsigned char * ImageData)
 	m_FinishedCells = 0;
 	m_ThreadCount = 0;
 
+	
 
-	thread RenderUpdateThread(&MandelFractal::ProgressWorker, this);
-
-	for (int ThreadIterator = 0; ThreadIterator < m_TotalThreads; ThreadIterator++)
+	if (settings.UseGPU)
 	{
-		Workers.emplace_back(thread([&](MandelFractal* f) {f->FractalWorker(ImageData, LeftMostX, TopMostI, PixelCoordinateDelta, SuperSampleCoordinateDelta); }, this));
+		uint32_t arrayCount = m_PixelWidth * m_PixelHeight;
+		uint32_t *iterations = new uint32_t[arrayCount];
+		double *magnitudes = new double[arrayCount];
+
+		char buff[500];
+		m_ControlPanel->GetHumanReadableMPFString(LeftMostX, buff);
+		cout << "LeftX: " << buff << endl;
+		m_ControlPanel->GetHumanReadableMPFString(TopMostI, buff);
+		cout << "TopMostI: " << buff << endl;
+		m_ControlPanel->GetHumanReadableMPFString(PixelCoordinateDelta, buff);
+		cout << "PixelCoordinateDelta: " << buff << endl;
+		m_ControlPanel->GetHumanReadableMPFString(SuperSampleCoordinateDelta, buff);
+		cout << "SuperSampleCoordinateDelta: " << buff << endl;
+
+		CUDAFractalWorker(LeftMostX, TopMostI, PixelCoordinateDelta, SuperSampleCoordinateDelta, m_PixelWidth, m_PixelHeight, m_MaxIterations, 1, 512, iterations, magnitudes);
+		
+		//for (uint32_t i = 0; i < arrayCount; i++)
+		//{
+		//	FillPixel(i*3, iterations[i], magnitudes[i], ImageData);
+		//}
+
+		delete magnitudes;
+		delete iterations;
+	}
+	else
+	{
+		thread RenderUpdateThread(&MandelFractal::ProgressWorker, this);
+
+		for (int ThreadIterator = 0; ThreadIterator < m_TotalThreads; ThreadIterator++)
+		{
+			Workers.emplace_back(thread([&](MandelFractal* f) {f->FractalWorker(ImageData, LeftMostX, TopMostI, PixelCoordinateDelta, SuperSampleCoordinateDelta); }, this));
+		}
+
+		for (int ThreadIterator = 0; ThreadIterator < m_TotalThreads; ThreadIterator++)
+		{
+			Workers[ThreadIterator].join();
+		}
+
+		RenderUpdateThread.join();
 	}
 
-	for (int ThreadIterator = 0; ThreadIterator < m_TotalThreads; ThreadIterator++)
-	{
-		Workers[ThreadIterator].join();
-	}
 
-	RenderUpdateThread.join();
 
 	m_ControlPanel->OnRenderFinish(std::chrono::high_resolution_clock::now() - m_renderStartTime, m_abort);
 
