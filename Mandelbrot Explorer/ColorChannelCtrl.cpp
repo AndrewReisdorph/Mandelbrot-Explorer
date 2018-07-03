@@ -47,7 +47,7 @@ void ColorChannelCtrl::InitializeUI()
 	wxFont colorNameFont = colorNameText->GetFont();
 	colorNameFont.SetWeight(wxFONTWEIGHT_BOLD);
 	colorNameText->SetFont(colorNameFont);
-	mainHSizer->Add(colorNameText, wxSizerFlags().CenterHorizontal().CenterVertical().Border(wxLEFT|wxRIGHT));
+	mainHSizer->Add(colorNameText, wxALIGN_CENTRE_VERTICAL | wxALIGN_CENTRE_HORIZONTAL | wxLEFT | wxRIGHT);
 	mainHSizer->Add(sliderPanelGridSizer, wxSizerFlags().Border(wxUP).Expand().Proportion(1));
 
 	SetSizer(mainHSizer);

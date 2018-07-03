@@ -24,8 +24,8 @@ void ColorControlPanel::InitializeUI()
 	wxStaticText *ColorModeText = new wxStaticText(ColorModePanel, wxID_ANY, "Color Mode:");
 	wxChoice *ColorModeDropdown = new wxChoice(ColorModePanel, wxID_ANY, wxDefaultPosition, wxDefaultSize, NUM_COLOR_MODES, m_ColorModeOptions);
 	ColorModeDropdown->SetSelection(0);
-	ColorModeGridSizer->Add(ColorModeText, wxSizerFlags().CenterVertical().Border(wxALL));
-	ColorModeGridSizer->Add(ColorModeDropdown, wxSizerFlags().CenterVertical().Border(wxALL));
+	ColorModeGridSizer->Add(ColorModeText, wxALIGN_CENTRE_VERTICAL | wxALL);
+	ColorModeGridSizer->Add(ColorModeDropdown, wxALIGN_CENTRE_VERTICAL | wxALL);
 	ColorModePanel->SetSizer(ColorModeGridSizer);
 
 	wxBoxSizer *channelSettingsHSizer = new wxBoxSizer(wxHORIZONTAL);

@@ -28,5 +28,5 @@ SOURCES += ColorChannelCtrl.cpp
 OBJECTS = $(addprefix $(SOURCE_DIR),$(SOURCES))
 
 all: $(OBJECTS)
-	$(CXX) $(CXXFLAGS) -o mandelexplore $(OBJECTS) $(LDLIBS) $(INCFLAGS) -std=c++17
+	$(CXX) $(CXXFLAGS) -o mandelexplore $(OBJECTS) $(LDLIBS) $(INCFLAGS) -std=c++1y
 

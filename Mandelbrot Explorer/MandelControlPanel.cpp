@@ -1,5 +1,7 @@
 #include <wx/wx.h>
 #include <wx/slider.h>
+#include <wx/sizer.h>
+#include <wx/gauge.h>
 #include <chrono>
 #include <string>
 #include <sstream>
@@ -84,7 +86,8 @@ void MandelControlPanel::InitializeUI()
 	fractal_select_text->InheritsBackgroundColour();
 	wxChoice *fractal_select_dropdown = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, NUM_FRACTAL_OPTIONS, m_FractalChoices);
 	fractal_select_dropdown->SetSelection(0);
-	AppearanceFlexSizer->Add(fractal_select_text, wxSizerFlags().CenterVertical());
+
+	AppearanceFlexSizer->Add(fractal_select_text, wxALIGN_CENTRE_VERTICAL);
 	AppearanceFlexSizer->Add(fractal_select_dropdown, wxSizerFlags().Expand());
 
 	wxStaticText *resolution_text = new wxStaticText(this, wxID_ANY, "Resolution:");
@@ -100,7 +103,7 @@ void MandelControlPanel::InitializeUI()
 	m_IterationsSpinCtrl->SetRange(1, 65535);
 	m_IterationsSpinCtrl->SetValue(100);
 
-	AppearanceFlexSizer->Add(IterationsText, wxSizerFlags().CenterVertical());
+	AppearanceFlexSizer->Add(IterationsText, wxALIGN_CENTRE_VERTICAL);
 	AppearanceFlexSizer->Add(m_IterationsSpinCtrl, wxSizerFlags().Expand());
 
 	wxStaticText *sample_rate_text = new wxStaticText(this, wxID_ANY, "Sample Rate:");
@@ -108,7 +111,7 @@ void MandelControlPanel::InitializeUI()
 	sample_rate_spinner_->SetRange(1, 1000);
 	sample_rate_spinner_->SetValue(2);
 
-	AppearanceFlexSizer->Add(sample_rate_text, wxSizerFlags().CenterVertical());
+	AppearanceFlexSizer->Add(sample_rate_text, wxALIGN_CENTRE_VERTICAL);
 	AppearanceFlexSizer->Add(sample_rate_spinner_, wxSizerFlags().Expand());
 
 	wxStaticText *hardwareSelectText = new wxStaticText(this, wxID_ANY, "Hardware:");
@@ -116,7 +119,7 @@ void MandelControlPanel::InitializeUI()
 	m_CurrentHardwareSelection = 0;
 	HardwareSelectDropdown->SetSelection(m_CurrentHardwareSelection);
 	HardwareSelectDropdown->Bind(wxEVT_CHOICE, &MandelControlPanel::OnHardwareSelect, this);
-	AppearanceFlexSizer->Add(hardwareSelectText, wxSizerFlags().CenterVertical());
+	AppearanceFlexSizer->Add(hardwareSelectText, wxALIGN_CENTRE_VERTICAL);
 	AppearanceFlexSizer->Add(HardwareSelectDropdown, wxSizerFlags().Expand());
 
 	wxStaticText *ThreadCountStaticText = new wxStaticText(this, wxID_ANY, "Threads:");
@@ -124,7 +127,7 @@ void MandelControlPanel::InitializeUI()
 	m_ThreadCountSpinCtrl->SetRange(1, 32);
 	m_ThreadCountSpinCtrl->SetValue(2);
 
-	AppearanceFlexSizer->Add(ThreadCountStaticText, wxSizerFlags().CenterVertical());
+	AppearanceFlexSizer->Add(ThreadCountStaticText, wxALIGN_CENTRE_VERTICAL);
 	AppearanceFlexSizer->Add(m_ThreadCountSpinCtrl, wxSizerFlags().Expand());
 
 #if 0
@@ -179,11 +182,11 @@ void MandelControlPanel::InitializeUI()
 	wxFlexGridSizer *MouseCoordinateFlexSizer = new wxFlexGridSizer(2, 2, 5, 5);
 	MouseCoordinateFlexSizer->AddGrowableCol(1);
 	wxStaticText *MouseRealText = new wxStaticText(this, wxID_ANY, "Real:");
-	MouseCoordinateFlexSizer->Add(MouseRealText, wxSizerFlags().CenterVertical());
+	MouseCoordinateFlexSizer->Add(MouseRealText, wxALIGN_CENTRE_VERTICAL);
 	m_MouseRealTextBox = new wxTextCtrl(this, wxID_ANY);
 	MouseCoordinateFlexSizer->Add(m_MouseRealTextBox,wxSizerFlags().Proportion(1).Expand());
 	wxStaticText *MouseImaginaryText = new wxStaticText(this, wxID_ANY, "Imaginary:");
-	MouseCoordinateFlexSizer->Add(MouseImaginaryText, wxSizerFlags().CenterVertical());
+	MouseCoordinateFlexSizer->Add(MouseImaginaryText, wxALIGN_CENTRE_VERTICAL);
 	m_MouseImaginaryTextBox = new wxTextCtrl(this, wxID_ANY);
 	MouseCoordinateFlexSizer->Add(m_MouseImaginaryTextBox, wxSizerFlags().Proportion(1).Expand());
 	LocationBox->Add(MouseCoordinateFlexSizer,wxSizerFlags().Expand());
@@ -191,18 +194,18 @@ void MandelControlPanel::InitializeUI()
 	wxBoxSizer *centerCoordinateLabelBox = new wxBoxSizer(wxHORIZONTAL);
 	wxStaticText *CenterCoordinateText = new wxStaticText(this, wxID_ANY, "Center Coordinates:");
 	wxButton *setCenterCoordinatesButton = new wxButton(this, wxID_ANY, "...", wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
-	centerCoordinateLabelBox->Add(CenterCoordinateText, wxSizerFlags().Border(wxRIGHT).CenterVertical());
+	centerCoordinateLabelBox->Add(CenterCoordinateText, wxALIGN_CENTRE_VERTICAL | wxRIGHT);
 	centerCoordinateLabelBox->Add(setCenterCoordinatesButton);
 
 	wxFlexGridSizer *CenterCoordinateFlexSizer = new wxFlexGridSizer(2, 2, 5, 5);
 	CenterCoordinateFlexSizer->AddGrowableCol(1);
 	LocationBox->Add(centerCoordinateLabelBox, wxSizerFlags().Border(wxUP));
 	wxStaticText *CenterRealText = new wxStaticText(this, wxID_ANY, "Real:");
-	CenterCoordinateFlexSizer->Add(CenterRealText, wxSizerFlags().CenterVertical());
+	CenterCoordinateFlexSizer->Add(CenterRealText, wxALIGN_CENTRE_VERTICAL);
 	m_CenterRealTextBox = new wxTextCtrl(this, wxID_ANY);
 	CenterCoordinateFlexSizer->Add(m_CenterRealTextBox, wxSizerFlags().Proportion(1).Expand());
 	wxStaticText *CenterImaginaryText = new wxStaticText(this, wxID_ANY, "Imaginary:");
-	CenterCoordinateFlexSizer->Add(CenterImaginaryText, wxSizerFlags().CenterVertical());
+	CenterCoordinateFlexSizer->Add(CenterImaginaryText, wxALIGN_CENTRE_VERTICAL);
 	m_CenterImaginaryTextBox = new wxTextCtrl(this, wxID_ANY);
 	CenterCoordinateFlexSizer->Add(m_CenterImaginaryTextBox, wxSizerFlags().Proportion(1).Expand());
 	LocationBox->Add(CenterCoordinateFlexSizer, wxSizerFlags().Expand().Border(wxDOWN));
@@ -210,23 +213,28 @@ void MandelControlPanel::InitializeUI()
 	wxBoxSizer *plotDimensionsHBox = new wxBoxSizer(wxHORIZONTAL);
 	wxStaticText *plotDimensionsText = new wxStaticText(this, wxID_ANY, "Plot Dimensions:");
 	wxButton *setPlotDimensionsButton = new wxButton(this, wxID_ANY, "...", wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
-	plotDimensionsHBox->Add(plotDimensionsText, wxSizerFlags().Border(wxRIGHT).CenterVertical());
+	plotDimensionsHBox->Add(plotDimensionsText, wxRIGHT | wxALIGN_CENTRE_VERTICAL);
 	plotDimensionsHBox->Add(setPlotDimensionsButton);
 	LocationBox->Add(plotDimensionsHBox);
 
 	wxFlexGridSizer *PlotDimensionsFlexSizer = new wxFlexGridSizer(2, 2, 5, 5);
 	PlotDimensionsFlexSizer->AddGrowableCol(1);
 	wxStaticText *PlotWidthText = new wxStaticText(this, wxID_ANY, "Plot Width:");
-	PlotDimensionsFlexSizer->Add(PlotWidthText, wxSizerFlags().CenterVertical());
+	PlotDimensionsFlexSizer->Add(PlotWidthText, wxALIGN_CENTRE_VERTICAL);
 	m_PlotWidthTextBox = new wxTextCtrl(this, wxID_ANY);
 	PlotDimensionsFlexSizer->Add(m_PlotWidthTextBox, wxSizerFlags().Proportion(1).Expand());
 	wxStaticText *PlotHeightText = new wxStaticText(this, wxID_ANY, "Plot Height:");
-	PlotDimensionsFlexSizer->Add(PlotHeightText, wxSizerFlags().CenterVertical());
+	PlotDimensionsFlexSizer->Add(PlotHeightText, wxALIGN_CENTRE_VERTICAL);
 	m_PlotHeightTextBox = new wxTextCtrl(this, wxID_ANY);
 	PlotDimensionsFlexSizer->Add(m_PlotHeightTextBox, wxSizerFlags().Proportion(1).Expand());
 	LocationBox->Add(PlotDimensionsFlexSizer, wxSizerFlags().Expand());
 
-	m_RenderProgressBar = new wxGauge(this, wxID_ANY, 100, wxDefaultPosition, wxDefaultSize, wxGA_HORIZONTAL | wxGA_PROGRESS | wxGA_SMOOTH);
+	long progressBarStyle = wxGA_HORIZONTAL | wxGA_SMOOTH;
+	// wxGA_PROGRESS is only supported on Windows
+	#ifdef _WIN32
+	progressBarStyle |= wxGA_PROGRESS;
+	#endif
+	m_RenderProgressBar = new wxGauge(this, wxID_ANY, 100, wxDefaultPosition, wxDefaultSize, progressBarStyle);
 
 	main_vbox->Add(appearance_static_box,wxSizerFlags().Border().Expand());
 	main_vbox->Add(LocationBox, wxSizerFlags().Border().Expand());

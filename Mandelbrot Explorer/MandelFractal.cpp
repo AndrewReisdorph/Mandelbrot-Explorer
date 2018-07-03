@@ -479,7 +479,10 @@ void MandelFractal::InitColorPalette()
 			Blue = int((sin(BlueOffset + BaseAngle) + 1)*RGBFraction);
 			m_ColorMap[MapIter] = {Red,Green,Blue};
 		}
-
+		break;
+	case LOGLOG:
+	case PROPORTIONAL:
+	default:
 		break;
 	}
 
@@ -546,6 +549,11 @@ void MandelFractal::FillPixel(int ImageBufferIndex, int Iteration, double Magnit
 		ImageData[ImageBufferIndex++] = IterationColor.Green;
 		ImageData[ImageBufferIndex] = IterationColor.Blue;
 		break;
+	case LOGLOG:
+	case PROPORTIONAL:
+	default:
+		break;
+
 	}
 
 }

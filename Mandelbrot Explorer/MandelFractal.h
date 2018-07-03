@@ -2,6 +2,7 @@
 #include <thread>
 #include <mutex> 
 #include <chrono>
+#include <vector>
 
 #include <atomic>
 #include <mpir.h>
@@ -30,9 +31,9 @@ class MandelFractal
 private:
 	std::chrono::time_point<std::chrono::high_resolution_clock> m_renderStartTime;
 	std::mutex m_ThreadMutex;
-	std::atomic_uint32_t m_FinishedCells;
-	std::atomic_uint32_t m_MaxIterCells;
-	std::atomic_uint32_t m_ThreadCount;
+	std::atomic<std::uint32_t> m_FinishedCells;
+	std::atomic<std::uint32_t> m_MaxIterCells;
+	std::atomic<std::uint32_t> m_ThreadCount;
 	MandelControlPanel *m_ControlPanel;
 	MandelViewPanel *m_RenderArea;
 	int m_TotalThreads;
