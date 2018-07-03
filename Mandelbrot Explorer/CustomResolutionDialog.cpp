@@ -23,9 +23,9 @@ CustomResolutionDialog::CustomResolutionDialog(): wxDialog(NULL, -1, "Custom Res
 	m_HeightTextCtrl = new wxTextCtrl(this, wxID_ANY, "480", wxDefaultPosition, wxDefaultSize, 0, resolutionValidator);
 	m_HeightTextCtrl->Bind(wxEVT_KEY_UP, &CustomResolutionDialog::OnKeyUp, this);
 
-	gridSizer->Add(WidthText,wxALIGN_CENTRE_VERTICAL);
+	gridSizer->Add(WidthText, 0, wxALIGN_CENTRE_VERTICAL);
 	gridSizer->Add(m_WidthTextCtrl);
-	gridSizer->Add(HeightText, wxALIGN_CENTRE_VERTICAL);
+	gridSizer->Add(HeightText, 0, wxALIGN_CENTRE_VERTICAL);
 	gridSizer->Add(m_HeightTextCtrl);
 
 	wxButton *OKButton = new wxButton(this, -1, wxT("OK"));//,wxDefaultPosition, wxSize(70, 30));
@@ -57,8 +57,6 @@ void CustomResolutionDialog::OnOKButton(wxCommandEvent& event)
 void CustomResolutionDialog::OnKeyUp(wxKeyEvent & event)
 {
 	int keyCode = event.GetKeyCode();
-
-	std::cout << "Got key: " << keyCode << std::endl;
 
 	if (keyCode == WXK_RETURN || keyCode == WXK_NUMPAD_ENTER)
 	{
