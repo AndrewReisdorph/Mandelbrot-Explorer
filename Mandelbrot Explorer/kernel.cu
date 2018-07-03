@@ -1934,7 +1934,7 @@ void CUDAFractalWorker(mpf_t leftX, mpf_t topI, mpf_t pixelCoordinateDelta, mpf_
 		//mpfloat_test_mul_host();
 		unsigned int *gx;
 		unsigned int *bx;
-		cudaStatus = cudaMallocManaged(gx, sizeof(unsigned int));
+		cudaStatus = cudaMallocManaged((void**)&gx, sizeof(unsigned int));
 		cudaTesting << <gridSize, blockSize >> > ();
 
 		

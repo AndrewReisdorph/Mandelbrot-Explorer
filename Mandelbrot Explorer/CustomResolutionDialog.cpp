@@ -10,8 +10,10 @@ CustomResolutionDialog::CustomResolutionDialog(): wxDialog(NULL, -1, "Custom Res
 
 	wxStaticText *WidthText = new wxStaticText(this, wxID_ANY, "Width:");
 	m_WidthTextCtrl = new wxTextCtrl(this, wxID_ANY, "854", wxDefaultPosition, wxDefaultSize, 0, val);
+	m_WidthTextCtrl->Bind(wxEVT_KEY_UP, &CustomResolutionDialog::OnKeyUp, this);
 	wxStaticText *HeightText = new wxStaticText(this, wxID_ANY, "Height:");
 	m_HeightTextCtrl = new wxTextCtrl(this, wxID_ANY, "480", wxDefaultPosition, wxDefaultSize, 0, val);
+	m_HeightTextCtrl->Bind(wxEVT_KEY_UP, &CustomResolutionDialog::OnKeyUp, this);
 
 	gridSizer->Add(WidthText,wxSizerFlags().CentreVertical());
 	gridSizer->Add(m_WidthTextCtrl);
@@ -40,6 +42,21 @@ void CustomResolutionDialog::OnCancelButton(wxCommandEvent& event)
 }
 
 void CustomResolutionDialog::OnOKButton(wxCommandEvent& event)
+{
+	ValidateDimensions();
+}
+
+void CustomResolutionDialog::OnKeyUp(wxKeyEvent & event)
+{
+	int keyCode = event.GetKeyCode();
+
+	if (keyCode == WXK_RETURN || keyCode == WXK_NUMPAD_ENTER)
+	{
+		ValidateDimensions();
+	}
+}
+
+void CustomResolutionDialog::ValidateDimensions()
 {
 	m_WidthTextCtrl->GetValue().ToLong(&m_Width);
 	m_HeightTextCtrl->GetValue().ToLong(&m_Height);

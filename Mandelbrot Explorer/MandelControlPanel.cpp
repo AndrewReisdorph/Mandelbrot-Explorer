@@ -98,6 +98,7 @@ void MandelControlPanel::InitializeUI()
 	wxStaticText *IterationsText = new wxStaticText(this, wxID_ANY, "Iterations:");
 	m_IterationsSpinCtrl = new wxSpinCtrl(this, wxID_ANY);
 	m_IterationsSpinCtrl->SetRange(1, 65535);
+	m_IterationsSpinCtrl->SetValue(100);
 
 	AppearanceFlexSizer->Add(IterationsText, wxSizerFlags().CenterVertical());
 	AppearanceFlexSizer->Add(m_IterationsSpinCtrl, wxSizerFlags().Expand());
@@ -105,6 +106,7 @@ void MandelControlPanel::InitializeUI()
 	wxStaticText *sample_rate_text = new wxStaticText(this, wxID_ANY, "Sample Rate:");
 	sample_rate_spinner_ = new wxSpinCtrl(this, wxID_ANY);
 	sample_rate_spinner_->SetRange(1, 1000);
+	sample_rate_spinner_->SetValue(2);
 
 	AppearanceFlexSizer->Add(sample_rate_text, wxSizerFlags().CenterVertical());
 	AppearanceFlexSizer->Add(sample_rate_spinner_, wxSizerFlags().Expand());
@@ -294,7 +296,6 @@ void MandelControlPanel::OnResolutionSelect(wxCommandEvent& event)
 			CustomResolutionDialog *ResolutionDialog = new CustomResolutionDialog();
 			ResolutionDialog->Show(true);
 			int ReturnCode = ResolutionDialog->GetReturnCode();
-			std:cout << "ReturnCode: " << ReturnCode << std::endl;
 			if (ReturnCode == wxOK)
 			{
 				NewWidth = ResolutionDialog->GetWidth();

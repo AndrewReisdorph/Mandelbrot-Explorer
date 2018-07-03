@@ -185,7 +185,6 @@ void MandelViewPanel::RenderVideoThread()
 	int initalIterationCount = 250;
 	double ZoomRate = 0.975;
 	wxString SaveDirectory;
-	char FileName[100];
 	RenderSettings settings = m_ControlPanel->GetRenderSettings();
 	int Iterations = initalIterationCount;
 	mpf_t plotHeight;
@@ -201,7 +200,6 @@ void MandelViewPanel::RenderVideoThread()
 		SaveDirectory = SelectDirectoryDialog->GetPath();
 		std::regex pattern("frame_(\\d+).png");
 		std::smatch matches;
-		bool matched;
 		wxDir directory(SelectDirectoryDialog->GetPath());
 		bool cont = directory.GetFirst(&filename);
 		int highest_frame = 0;

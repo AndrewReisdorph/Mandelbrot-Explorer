@@ -6,7 +6,7 @@
 #include "main.h"
 #ifdef __linux__
 #elif __APPLE__
-#else
+#elif _WIN64
 #include "cudaWorker.cuh"
 #include <cuda.h>
 extern __global__ void CUDAFractalWorker(mpf_t leftX, mpf_t topI, mpf_t pixelCoordinateDelta, mpf_t SuperSampleCoordinateDelta, int frameWidth, int frameHeight, int MaxIterations, int SampleRate, int Precision, uint32_t *HostIterations, double *HostMagnitudes);
@@ -277,7 +277,6 @@ bool MandelFractal::RenderFractal(unsigned char * ImageData)
 	int ImageDataIterator = 0;
 	int CurrentIterations = 0;
 	int MinIteration = 0;
-	double MinIterationMagnitude;
 	int CellsCompleted = 0;
 	int VerticalSuperSamples = m_PixelHeight * m_SuperSampleRate;
 	mpf_t CurrentX;
@@ -353,8 +352,8 @@ bool MandelFractal::RenderFractal(unsigned char * ImageData)
 	{
 #ifdef __linux__
 #elif __APPLE__
-#else
-				uint32_t arrayCount = m_PixelWidth * m_PixelHeight;
+#elif _WIN64
+		uint32_t arrayCount = m_PixelWidth * m_PixelHeight;
 		uint32_t *iterations = new uint32_t[arrayCount];
 		double *magnitudes = new double[arrayCount];
 
@@ -448,7 +447,6 @@ void MandelFractal::InitColorPalette()
 	RenderSettings settings = m_ControlPanel->GetRenderSettings();
 	double TwoPi = M_PI * 2.0;
 	double RGBFraction = (255.0 / 2.0);
-	double GradationStep;
 	double GradationsAngleStep;
 	double RedOffset;
 	double GreenOffset;
@@ -829,8 +827,6 @@ void MandelFractal::FractalWorker(unsigned char*ImageData, mpf_t &LeftMostX, mpf
 
 			FillPixel(ImageDataIterator, FinalIterationChoice.Iteration, FinalIterationChoice.Magnitude, ImageData);
 
-
-			//FillPixel(ImageDataIterator, MinIteration, MinIterationMagnitude, ImageData);
 			ImageDataIterator += 3;
 			m_FinishedCells++;
 
