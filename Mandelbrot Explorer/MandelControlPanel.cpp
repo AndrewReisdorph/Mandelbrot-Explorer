@@ -37,7 +37,6 @@ void MandelControlPanel::SetMaxIterations(int Iterations)
 void MandelControlPanel::InitializeUI()
 {
 	srand(time(NULL));
-	wxInitAllImageHandlers();
 
 	wxBoxSizer *main_vbox = new wxBoxSizer(wxVERTICAL);
 	wxStaticBoxSizer *appearance_static_box = new wxStaticBoxSizer(wxVERTICAL, this, "Appearance");

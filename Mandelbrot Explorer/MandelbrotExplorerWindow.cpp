@@ -32,8 +32,6 @@ MandelbrotExplorerWindow::MandelbrotExplorerWindow(const wxString& title) : wxFr
 	m_MenuBar->Append(FileMenu, wxT("&File"));
 	SetMenuBar(m_MenuBar);
 	
-	wxInitAllImageHandlers();
-
 	SetSizer(MainVSizer);
 	MainVSizer->Fit(this);
 	Centre();

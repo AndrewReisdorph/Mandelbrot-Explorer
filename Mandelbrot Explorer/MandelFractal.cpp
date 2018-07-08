@@ -119,7 +119,7 @@ void MandelFractal::ProgressWorker()
 
 		PercentComplete = std::min(100, int(100.0 * double(m_FinishedCells) / NumCells));
 		m_ControlPanel->UpdateProgressBar(PercentComplete);
-		m_RenderArea->Refresh();
+		m_RenderArea->CallAfter(&MandelViewPanel::DoRefresh);
 
 		if (m_FinishedCells == NumCells)
 		{

@@ -50,6 +50,11 @@ void MandelViewPanel::SetResolution(int Width, int Height)
 
 }
 
+void MandelViewPanel::DoRefresh()
+{
+	Refresh();
+}
+
 void MandelViewPanel::SaveImage()
 {
 	wxFileDialog *SaveDialog = new wxFileDialog(this, _("Save Image To File"), wxEmptyString, wxEmptyString, wxEmptyString, wxFD_SAVE | wxFD_OVERWRITE_PROMPT, wxDefaultPosition);
@@ -310,7 +315,11 @@ void MandelViewPanel::OnPaint(wxPaintEvent& event)
 	wxAutoBufferedPaintDC dc(this);
 	dc.SetBrush(wxBrush(wxColour(0, 0, 0, 0), wxBRUSHSTYLE_SOLID));
 	dc.Clear();
-	dc.DrawBitmap(wxBitmap(*m_FractalImage), wxPoint(0, 0));
+	wxBitmap fractalBitmap = wxBitmap(*m_FractalImage);
+	if (fractalBitmap.IsOk())
+	{
+		dc.DrawBitmap(fractalBitmap, wxPoint(0, 0));
+	}
 
 	if (m_BoxStart.Active && m_BoxEnd.Active)
 	{

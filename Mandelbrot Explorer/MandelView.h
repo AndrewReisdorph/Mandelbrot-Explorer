@@ -41,6 +41,7 @@ private:
 public:
 	MandelViewPanel(wxFrame *parent, MandelControlPanel *ControlPanel);
 	~MandelViewPanel();
+	void DoRefresh();
 	void Render();
 	void RenderSelection();
 	void SaveImage();

@@ -9,6 +9,8 @@ using namespace std;
 bool MandelbrotExplorerApp::OnInit()
 {
 	mpf_set_default_prec(512);
+
+	wxInitAllImageHandlers();
 	wxFrame* window = new MandelbrotExplorerWindow("Mandelbrot Explorer");
 	window->Show();
 
