@@ -15,7 +15,7 @@
 
 using namespace std;
 
-MandelControlPanel::MandelControlPanel(MandelbrotExplorerWindow *parent, int id):wxPanel(parent, id)
+MandelControlPanel::MandelControlPanel(MandelbrotExplorerWindow *parent, int id):wxScrolledWindow(parent, id)
 {
 	parent_ = parent;
 	render_state_ = RENDER_IDLE;
@@ -241,7 +241,16 @@ void MandelControlPanel::InitializeUI()
 	main_vbox->AddStretchSpacer();
 	main_vbox->Add(m_RenderProgressBar, wxSizerFlags().Border().Expand());
 
+	
+	
+
 	SetSizer(main_vbox);
+	wxSize bestVirtualSize = GetBestVirtualSize();
+	bestVirtualSize.x += wxSystemSettings::GetMetric(wxSYS_VSCROLL_X);
+	bestVirtualSize.y += wxSystemSettings::GetMetric(wxSYS_HSCROLL_Y);
+	SetMinSize(bestVirtualSize);
+	this->ShowScrollbars(wxSHOW_SB_NEVER, wxSHOW_SB_ALWAYS);
+	this->SetScrollbars(20, 20, 50, 50);
 }
 
 void MandelControlPanel::SetMandelView(MandelViewPanel *MandelView)

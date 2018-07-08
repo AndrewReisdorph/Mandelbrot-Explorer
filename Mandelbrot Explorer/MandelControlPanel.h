@@ -32,7 +32,7 @@ enum RenderState
 
 
 
-class MandelControlPanel : public wxPanel
+class MandelControlPanel : public wxScrolledWindow
 {
 private:
 	RenderState render_state_;
