@@ -123,9 +123,16 @@ void MandelControlPanel::InitializeUI()
 	AppearanceFlexSizer->Add(HardwareSelectDropdown, wxSizerFlags().Expand());
 
 	wxStaticText *ThreadCountStaticText = new wxStaticText(this, wxID_ANY, "Threads:");
+	// Set the default number of threads to the number of CPU cores minus one
+	// Using all cores slows down the machine signifcantly during rendering
+	unsigned concurentThreadsSupported = std::thread::hardware_concurrency();
+	if (concurentThreadsSupported >= 2)
+	{
+		concurentThreadsSupported -= 1;
+	}
 	m_ThreadCountSpinCtrl = new wxSpinCtrl(this, wxID_ANY);
-	m_ThreadCountSpinCtrl->SetRange(1, 32);
-	m_ThreadCountSpinCtrl->SetValue(2);
+	m_ThreadCountSpinCtrl->SetRange(1, 64);
+	m_ThreadCountSpinCtrl->SetValue(concurentThreadsSupported);
 
 	AppearanceFlexSizer->Add(ThreadCountStaticText, 0, wxALIGN_CENTRE_VERTICAL);
 	AppearanceFlexSizer->Add(m_ThreadCountSpinCtrl, wxSizerFlags().Expand());
