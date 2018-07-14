@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.11)
+cmake_minimum_required (VERSION 3.10)
 project (MandelbrotExplorer)
 # The version number.
 set (MandelbrotExplorer_VERSION_MAJOR 1)
