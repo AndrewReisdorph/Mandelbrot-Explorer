@@ -1,0 +1,19 @@
+cmake_minimum_required (VERSION 3.11)
+project (MandelbrotExplorer)
+# The version number.
+set (MandelbrotExplorer_VERSION_MAJOR 1)
+set (MandelbrotExplorer_VERSION_MINOR 0)
+
+find_package(wxWidgets 3.1 COMPONENTS core base adv REQUIRED)
+include(${wxWidgets_USE_FILE})
+
+include_directories(include)
+
+set(SOURCES src/main.cpp
+	src/MandelExploreFrame.cpp)
+
+add_executable(mandelex ${SOURCES})
+
+target_link_libraries(mandelex
+    ${wxWidgets_LIBRARIES}
+    )
