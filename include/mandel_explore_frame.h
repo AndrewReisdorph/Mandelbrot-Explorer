@@ -1,9 +1,9 @@
 #pragma once
 
-#include <wx/frame.h>
-#include <wx/menu.h>
-#include <wx/event.h>
-#include <wx/app.h>
+#include "mandel_properties_panel.h"
+
+#include <wx/wx.h>
+
 
 enum
 {

@@ -1,4 +1,4 @@
-#include "MandelExploreFrame.h"
+#include "mandel_explore_frame.h"
 
 MandelExploreFrame::MandelExploreFrame(const wxString& title) : wxFrame(0, -1, title)
 {
@@ -9,6 +9,19 @@ MandelExploreFrame::MandelExploreFrame(const wxString& title) : wxFrame(0, -1, t
 	menuBar->Append(fileMenu, _T("&File"));
 
 	SetMenuBar(menuBar);
+
+	CreateStatusBar(1);
+
+	wxBoxSizer* mainVBoxSizer = new wxBoxSizer(wxVERTICAL);
+
+	MandelPropertiesPanel* proppanl = new MandelPropertiesPanel(this);
+
+	mainVBoxSizer->Add(proppanl, wxSizerFlags().Expand().Proportion(1));
+	proppanl->SetSize(wxSize(200, -1));
+
+	SetSizer(mainVBoxSizer);
+	mainVBoxSizer->Fit(this);
+	Centre();
 }
 
 void MandelExploreFrame::OnQuit(wxCommandEvent& WXUNUSED(event))

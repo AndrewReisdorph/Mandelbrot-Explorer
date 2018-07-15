@@ -1,5 +1,5 @@
 #include "main.h"
-#include "MandelExploreFrame.h"
+#include "mandel_explore_frame.h"
 
 #include<iostream>
 
