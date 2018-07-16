@@ -68,8 +68,8 @@ MandelPropertiesPanel::MandelPropertiesPanel(wxWindow *parent) :wxPropertyGrid(p
 	wxString positigve_geometry_property_string;
 	wxRegexValidator positive_multi_float_validator(wxREV_FILTER_INCLUDE_CHAR_LIST | wxREV_FILTER_REGEX, &positigve_geometry_property_string);
 	wxRegexValidator any_multi_float_validator(wxREV_FILTER_INCLUDE_CHAR_LIST|wxREV_FILTER_REGEX, &geometry_property_string);
-	any_multi_float_validator.SetRegexPattern("^-?[[:digit:]]+(\.?[[:digit:]]+)?$");
-	positive_multi_float_validator.SetRegexPattern("^[[:digit:]]+(\.?[[:digit:]]+)?$");
+	any_multi_float_validator.SetRegexPattern("^-?[[:digit:]]+(\\.?[[:digit:]]+)?$");
+	positive_multi_float_validator.SetRegexPattern("^[[:digit:]]+(\\.?[[:digit:]]+)?$");
 	wxArrayString any_float_validator_char_list;
 	wxArrayString positive_float_validator_char_list;
 	wxString valid_chars(wxT("0123456789."));

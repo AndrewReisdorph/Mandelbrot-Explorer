@@ -68,4 +68,4 @@ typedef struct FractalSettings {
 	wxString center_imaginary;
 	wxString plot_width;
 	wxString plot_height;
-};
+} FractalSettings;

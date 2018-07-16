@@ -9,6 +9,11 @@ include(${wxWidgets_USE_FILE})
 
 include_directories(include)
 
+IF(MSVC)
+    # using Visual Studio C++
+    ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS)
+ENDIF()
+
 set(SOURCES src/main.cpp
 	src/mandel_explore_frame.cpp
 	src/mandel_properties_panel.cpp
