@@ -11,7 +11,9 @@ include_directories(include)
 
 set(SOURCES src/main.cpp
 	src/mandel_explore_frame.cpp
-	src/mandel_properties_panel.cpp)
+	src/mandel_properties_panel.cpp
+	src/custom_resolution_dialog.cpp
+	src/regex_validator.cpp)
 
 add_executable(mandelex ${SOURCES})
 

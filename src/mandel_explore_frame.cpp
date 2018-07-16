@@ -2,25 +2,24 @@
 
 MandelExploreFrame::MandelExploreFrame(const wxString& title) : wxFrame(0, -1, title)
 {
-	wxMenu *fileMenu = new wxMenu;
-	fileMenu->Append(ID_MENU_QUIT, _T("E&xit\tAlt-X"), _T("Quit this program"));
+	wxMenu *file_menu = new wxMenu;
+	file_menu->Append(ID_MENU_QUIT, _T("E&xit\tAlt-X"), _T("Quit this program"));
 
-	wxMenuBar *menuBar = new wxMenuBar;
-	menuBar->Append(fileMenu, _T("&File"));
+	wxMenuBar *menu_bar = new wxMenuBar;
+	menu_bar->Append(file_menu, _T("&File"));
 
-	SetMenuBar(menuBar);
+	SetMenuBar(menu_bar);
 
 	CreateStatusBar(1);
 
-	wxBoxSizer* mainVBoxSizer = new wxBoxSizer(wxVERTICAL);
+	wxBoxSizer* main_v_box_sizer = new wxBoxSizer(wxVERTICAL);
+	MandelPropertiesPanel* mandel_properties_panel = new MandelPropertiesPanel(this);
 
-	MandelPropertiesPanel* proppanl = new MandelPropertiesPanel(this);
+	main_v_box_sizer->Add(mandel_properties_panel, wxSizerFlags().Expand().Proportion(1));
 
-	mainVBoxSizer->Add(proppanl, wxSizerFlags().Expand().Proportion(1));
-	proppanl->SetSize(wxSize(200, -1));
 
-	SetSizer(mainVBoxSizer);
-	mainVBoxSizer->Fit(this);
+	SetSizer(main_v_box_sizer);
+	main_v_box_sizer->Fit(this);
 	Centre();
 }
 
