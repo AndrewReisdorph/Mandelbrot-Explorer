@@ -6,11 +6,6 @@
 
 using namespace std;
 
-enum
-{
-	ID_PROPS = 1
-};
-
 MandelPropertiesPanel::MandelPropertiesPanel(wxWindow *parent) :wxPropertyGrid(parent)
 {
 	wxArrayString fractal_types_array(kNumFractalTypes, fractal_type_names);

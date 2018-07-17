@@ -9,8 +9,6 @@ class WXDLLIMPEXP_FWD_CORE wxTextEntry;
 
 #include "wx/validate.h"
 
-// TODO(andrew): Make this work for non-regex cases
-
 enum wxRegexValidatorStyle
 {
 	wxREV_FILTER_NONE = 0x0,
@@ -40,18 +38,18 @@ public:
 	// if you're passing a reference to a validator.
 	// Another possibility is to always pass a pointer to a new validator
 	// (so the calling code can use a copy constructor of the relevant class).
-	virtual wxObject *Clone() const wxOVERRIDE { return new wxRegexValidator(*this); }
+	virtual wxObject *Clone() const  { return new wxRegexValidator(*this); }
 	bool Copy(const wxRegexValidator& val);
 
 	// Called when the value in the window must be validated.
 	// This function can pop up an error message.
-	virtual bool Validate(wxWindow *parent) wxOVERRIDE;
+	virtual bool Validate(wxWindow *parent);
 
 	// Called to transfer data to the window
-	virtual bool TransferToWindow() wxOVERRIDE;
+	virtual bool TransferToWindow();
 
 	// Called to transfer data from the window
-	virtual bool TransferFromWindow() wxOVERRIDE;
+	virtual bool TransferFromWindow();
 
 	// Filter keystrokes
 	void OnChar(wxKeyEvent& event);
