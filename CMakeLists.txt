@@ -19,7 +19,8 @@ set(SOURCES src/main.cpp
 	src/mandel_properties_panel.cpp
 	src/custom_resolution_dialog.cpp
 	src/regex_validator.cpp
-	src/fractal_render_panel.cpp)
+	src/fractal_render_panel.cpp
+	src/palette_panel.cpp)
 
 add_executable(mandelex ${SOURCES})
 

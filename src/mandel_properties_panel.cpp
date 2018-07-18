@@ -37,8 +37,8 @@ MandelPropertiesPanel::MandelPropertiesPanel(wxWindow *parent) :wxPropertyGrid(p
 	cell_size_property_ = new wxUIntProperty("Cell Size", "cellsize", 1);
 	cell_size_property_->SetAttribute("Min", wxVariant(1));
 
-// TODO(andrew): Figure out how to make sure row heights are big enough to
-// a gtkspinner
+	// TODO(andrew): Figure out how to make sure row heights are big enough to
+	// a gtkspinner
 #if !defined(__linux__)
 	SetPropertyEditor(iterations_property_, wxPGEditor_SpinCtrl);
 	SetPropertyEditor(sample_rate_property_, wxPGEditor_SpinCtrl);
