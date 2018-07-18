@@ -26,6 +26,7 @@ MandelExploreFrame::MandelExploreFrame(const wxString& title) : wxFrame(0, -1, t
 	wxSystemOptions::SetOption("msw.remap", 0);
 #endif
 	tool_bar_ = CreateToolBar();
+	tool_bar_->SetToolBitmapSize(wxSize(24,24));
 	wxBitmap render_button_bitmap = wxBITMAP_PNG_FROM_DATA(fractal);
 	wxBitmap camera_button_bitmap = wxBITMAP_PNG_FROM_DATA(camera);
 	wxBitmap save_button_bitmap = wxBITMAP_PNG_FROM_DATA(save);
@@ -54,14 +55,34 @@ MandelExploreFrame::MandelExploreFrame(const wxString& title) : wxFrame(0, -1, t
 	CreateStatusBar(1);
 
 	wxBoxSizer* main_v_box_sizer = new wxBoxSizer(wxVERTICAL);
-	MandelPropertiesPanel* mandel_properties_panel = new MandelPropertiesPanel(this);
+	
+	main_h_splitter_ = new wxSplitterWindow(this);
 
-	main_v_box_sizer->Add(mandel_properties_panel, wxSizerFlags().Expand().Proportion(1));
+	mandel_properties_panel_ = new MandelPropertiesPanel(main_h_splitter_);
+	
 
+	FractalRenderPanel* fractal_render_panel = new FractalRenderPanel(main_h_splitter_);
+	int scroll_bar_width = wxSystemSettings::GetMetric(wxSYS_VSCROLL_X);
+	int sash_initial_position = mandel_properties_panel_->GetBestSize().GetWidth() + (scroll_bar_width * 2);
+	main_h_splitter_->SplitVertically(mandel_properties_panel_, fractal_render_panel, sash_initial_position);
+	main_h_splitter_->SetMinimumPaneSize(0);
+
+	main_v_box_sizer->Add(main_h_splitter_, wxSizerFlags().Expand().Proportion(1));
+
+
+	fractal_render_panel->SetMinSize(wxSize(854, 480));
+	wxSize properties_panel_size = mandel_properties_panel_->GetBestSize();
+	properties_panel_size.SetWidth(properties_panel_size.GetWidth() + scroll_bar_width * 2);
+	mandel_properties_panel_->SetMinSize(properties_panel_size);
 
 	SetSizer(main_v_box_sizer);
 	main_v_box_sizer->Fit(this);
 	Centre();
+
+	fractal_render_panel->SetMinSize(wxSize(-1, -1));
+	mandel_properties_panel_->SetMinSize(wxSize(-1, -1));
+
+	mandel_properties_panel_->FitColumns();
 }
 
 void MandelExploreFrame::OnOpenConfigurationButton(wxCommandEvent & event)

@@ -108,13 +108,17 @@ MandelPropertiesPanel::MandelPropertiesPanel(wxWindow *parent) :wxPropertyGrid(p
 	Append(center_imaginary_property_);
 	Append(plot_width_property_);
 	Append(plot_height_property_);
-
-	FitColumns();
+	
 }
 
 void MandelPropertiesPanel::OnPropertyChanged(wxPropertyGridEvent& event)
 {
 	wxPGProperty * selected_property = GetSelection();
+}
+
+void MandelPropertiesPanel::OnPropertyDoubleClick(wxPropertyGridEvent & event)
+{
+	FitColumns();
 }
 
 void MandelPropertiesPanel::SetMouseCoordinates(wxString real, wxString imaginary)
@@ -247,5 +251,6 @@ wxBEGIN_EVENT_TABLE(MandelPropertiesPanel, wxPropertyGrid)
 EVT_PG_CHANGED(wxID_ANY, MandelPropertiesPanel::OnPropertyChanged)
 EVT_PG_CHANGING(wxID_ANY, MandelPropertiesPanel::OnPropertyChanging)
 EVT_COMBOBOX(wxID_ANY, MandelPropertiesPanel::OnDropDownSelected)
+EVT_PG_DOUBLE_CLICK(wxID_ANY, MandelPropertiesPanel::OnPropertyDoubleClick)
 EVT_CHAR_HOOK(MandelPropertiesPanel::OnKey)
 wxEND_EVENT_TABLE()

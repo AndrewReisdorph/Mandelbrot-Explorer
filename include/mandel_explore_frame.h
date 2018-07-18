@@ -1,9 +1,10 @@
 #pragma once
 
 #include "mandel_properties_panel.h"
+#include "fractal_render_panel.h"
 
 #include <wx/wx.h>
-
+#include <wx/splitter.h>
 
 enum
 {
@@ -31,6 +32,8 @@ private:
 	wxBitmap pause_bitmap_;
 	wxBitmap cancel_bitmap_;
 	wxToolBar *tool_bar_;
+	MandelPropertiesPanel* mandel_properties_panel_;
+	wxSplitterWindow* main_h_splitter_;
 
 	void OnOpenConfigurationButton(wxCommandEvent& event);
 	void OnSaveConfigurationButton(wxCommandEvent& event);

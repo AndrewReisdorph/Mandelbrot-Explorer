@@ -46,6 +46,7 @@ private:
 	~MandelPropertiesPanel();
 	void OnPropertyChanging(wxPropertyGridEvent& event);
 	void OnPropertyChanged(wxPropertyGridEvent& event);
+	void OnPropertyDoubleClick(wxPropertyGridEvent& event);
 	void OnDropDownSelected(wxCommandEvent& event);
 	void OnKey(wxKeyEvent& event);
 	wxDECLARE_EVENT_TABLE();
