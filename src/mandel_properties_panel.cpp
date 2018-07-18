@@ -9,6 +9,10 @@ using namespace std;
 MandelPropertiesPanel::MandelPropertiesPanel(wxWindow *parent) :wxPropertyGrid(parent)
 {
 	wxArrayString fractal_types_array(kNumFractalTypes, fractal_type_names);
+	wxArrayString color_modes_array(kNumColorModes, color_mode_names);
+	wxArrayString hardware_types_array(kNumHardwareTypes, hardware_type_names);
+	wxArrayString cpu_data_types_array(kNumCpuPrecions, cpu_precision_names);
+	wxArrayString sample_kernel_types_array(kNumKernelTypes, kernel_type_names);
 
 	wxArrayString resolutions_array;
 	for (uint32_t resolution_iter = 0; resolution_iter < kNumResolutionOptions; resolution_iter++)
@@ -16,14 +20,6 @@ MandelPropertiesPanel::MandelPropertiesPanel(wxWindow *parent) :wxPropertyGrid(p
 		resolutions_array.Add(wxString::Format(wxT("%ix%i"), resolution_options[resolution_iter][0], resolution_options[resolution_iter][1]));
 	}
 	resolutions_array.Add("Custom");
-
-	wxArrayString color_modes_array(kNumColorModes, color_mode_names);
-
-	wxArrayString hardware_types_array(kNumHardwareTypes, hardware_type_names);
-
-	wxArrayString cpu_data_types_array(kNumCpuPrecions, cpu_precision_names);
-
-	wxArrayString sample_kernel_types_array(kNumKernelTypes, kernel_type_names);
 
 	iterations_property_ = new wxUIntProperty("Iterations", "iterations", 100);
 	iterations_property_->SetAttribute("Min", wxVariant(1));
@@ -57,7 +53,6 @@ MandelPropertiesPanel::MandelPropertiesPanel(wxWindow *parent) :wxPropertyGrid(p
 	cpu_data_type_property_ = new wxEnumProperty("Precision", "precision", cpu_data_types_array);
 	sample_kernel_property_ = new wxEnumProperty("Sample Kernel", "samplekernel", sample_kernel_types_array);
 
-	
 	
 	wxString geometry_property_string;
 	wxString positigve_geometry_property_string;

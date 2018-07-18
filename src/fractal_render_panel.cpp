@@ -1,7 +1,6 @@
 #include <wx/dcbuffer.h>
 
 #include "fractal_render_panel.h"
-#include "..\include\fractal_render_panel.h"
 
 using namespace std;
 
