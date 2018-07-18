@@ -37,10 +37,14 @@ MandelPropertiesPanel::MandelPropertiesPanel(wxWindow *parent) :wxPropertyGrid(p
 	cell_size_property_ = new wxUIntProperty("Cell Size", "cellsize", 1);
 	cell_size_property_->SetAttribute("Min", wxVariant(1));
 
+// TODO(andrew): Figure out how to make sure row heights are big enough to
+// a gtkspinner
+#if !defined(__linux__)
 	SetPropertyEditor(iterations_property_, wxPGEditor_SpinCtrl);
 	SetPropertyEditor(sample_rate_property_, wxPGEditor_SpinCtrl);
 	SetPropertyEditor(num_threads_property_, wxPGEditor_SpinCtrl);
 	SetPropertyEditor(cell_size_property_, wxPGEditor_SpinCtrl);
+#endif
 
 	mouse_real_property_ = new wxStringProperty("Mouse Real", "mousereal", "0.0");
 	mouse_imaginary_property_ = new wxStringProperty("Mouse Imaginary", "mouseimaginary", "0.0");
@@ -103,7 +107,7 @@ MandelPropertiesPanel::MandelPropertiesPanel(wxWindow *parent) :wxPropertyGrid(p
 	Append(center_imaginary_property_);
 	Append(plot_width_property_);
 	Append(plot_height_property_);
-	
+
 }
 
 void MandelPropertiesPanel::OnPropertyChanged(wxPropertyGridEvent& event)
