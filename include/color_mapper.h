@@ -18,23 +18,20 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
 
-#ifndef PALETTE_PANEL_H
-#define PALETTE_PANEL_H
+#ifndef COLOR_MAPPER_H
+#define COLOR_MAPPER_H
 
-#include <wx/wx.h>
+#include <cstdint>
 
-#include "waves_palette_panel.h"
-#include "fractal_settings.h"
+typedef struct Color {
+  uint8_t red;
+  uint8_t green;
+  uint8_t blue;
+} Color;
 
-class PalettePanel : public wxPanel
-{
-private:
-	ColorMode color_mode_;
-  WavesPalettePanel *waves_palette_panel_;
-
-
+class ColorMapper {
 public:
-	PalettePanel(wxWindow *parent);
+	virtual Color GetColor(uint64_t iteration, double magnitude, bool loglog) = 0;
 };
 
 #endif

@@ -20,7 +20,10 @@ set(SOURCES src/main.cpp
 	src/custom_resolution_dialog.cpp
 	src/regex_validator.cpp
 	src/fractal_render_panel.cpp
-	src/palette_panel.cpp)
+	src/palette_panel.cpp
+  src/wave_control.cpp
+  src/waves_color_mapper.cpp
+  src/waves_palette_panel.cpp)
 
 add_executable(mandelex ${SOURCES})
 

@@ -8,7 +8,8 @@
 
 using namespace std;
 
-MandelExploreFrame::MandelExploreFrame(const wxString& title) : wxFrame(0, -1, title)
+MandelExploreFrame::MandelExploreFrame(const wxString& title) : wxFrame(0, -1,
+                                                                        title)
 {
 	wxMenu *file_menu = new wxMenu;
 	file_menu->Append(ID_MENU_QUIT, _T("E&xit\tAlt-X"), _T("Quit this program"));
@@ -41,21 +42,33 @@ MandelExploreFrame::MandelExploreFrame(const wxString& title) : wxFrame(0, -1, t
 	pause_bitmap_ = wxBITMAP_PNG_FROM_DATA(pause);
 	cancel_bitmap_ = wxBITMAP_PNG_FROM_DATA(cancel);
 
-	tool_bar_->AddTool(ID_TOOLBAR_OPEN, wxT("Open Configuration"), open_button_bitmap);
-	tool_bar_->AddTool(ID_TOOLBAR_SAVE, wxT("Save Configuration"), save_button_bitmap);
+	tool_bar_->AddTool(ID_TOOLBAR_OPEN, wxT("Open Configuration"),
+                     open_button_bitmap);
+	tool_bar_->AddTool(ID_TOOLBAR_SAVE, wxT("Save Configuration"),
+                     save_button_bitmap);
 	tool_bar_->AddSeparator();
-	tool_bar_->AddTool(ID_TOOLBAR_RENDER, wxT("Render"), render_button_bitmap);
-	tool_bar_->AddTool(ID_TOOLBAR_CAPTURE, wxT("Save Image"), camera_button_bitmap);
-	tool_bar_->AddTool(ID_TOOLBAR_PALETTE, wxT("Palette"), palette_button_bitmap);
-	tool_bar_->AddTool(ID_TOOLBAR_PROPERTIES, wxT("Properties"), properties_bitmap);
-	tool_bar_->AddTool(ID_TOOLBAR_VIDEO, wxT("Render Video"), video_button_bitmap);
+	tool_bar_->AddTool(ID_TOOLBAR_RENDER, wxT("Render"),
+                     render_button_bitmap);
+	tool_bar_->AddTool(ID_TOOLBAR_CAPTURE, wxT("Save Image"),
+                     camera_button_bitmap);
+	tool_bar_->AddTool(ID_TOOLBAR_PALETTE, wxT("Palette"),
+                     palette_button_bitmap);
+	tool_bar_->AddTool(ID_TOOLBAR_PROPERTIES, wxT("Properties"),
+                     properties_bitmap);
+	tool_bar_->AddTool(ID_TOOLBAR_VIDEO, wxT("Render Video"),
+                     video_button_bitmap);
 	tool_bar_->AddSeparator();
-	tool_bar_->AddTool(ID_TOOLBAR_PAUSE_RESUME, wxT("Pause/Resume Render"), resume_bitmap_);
-	tool_bar_->AddTool(ID_TOOLBAR_CANCEL, wxT("Cancel Render"), cancel_bitmap_);
+	tool_bar_->AddTool(ID_TOOLBAR_PAUSE_RESUME, wxT("Pause/Resume Render"),
+                     resume_bitmap_);
+	tool_bar_->AddTool(ID_TOOLBAR_CANCEL, wxT("Cancel Render"),
+                     cancel_bitmap_);
 	tool_bar_->AddStretchableSpace();
-	tool_bar_->AddTool(ID_TOOLBAR_HOME, wxT("Home"), home_bitmap);
-	tool_bar_->AddTool(ID_TOOLBAR_SELECT, wxT("Selection Tool"), select_box_bitmap);
-	tool_bar_->AddTool(ID_TOOLBAR_ZOOM, wxT("Zoom"), zoom_bitmap);
+	tool_bar_->AddTool(ID_TOOLBAR_HOME, wxT("Home"),
+                     home_bitmap);
+	tool_bar_->AddTool(ID_TOOLBAR_SELECT, wxT("Selection Tool"),
+                     select_box_bitmap);
+	tool_bar_->AddTool(ID_TOOLBAR_ZOOM, wxT("Zoom"),
+                     zoom_bitmap);
 	tool_bar_->Realize();
 
 	CreateStatusBar(1);
@@ -64,26 +77,31 @@ MandelExploreFrame::MandelExploreFrame(const wxString& title) : wxFrame(0, -1, t
 	main_h_splitter_ = new wxSplitterWindow(this);
 
 	mandel_properties_panel_ = new MandelPropertiesPanel(main_h_splitter_);
-	
+  wxSize properties_panel_size = mandel_properties_panel_->GetBestSize();
+  int properties_panel_width = properties_panel_size.GetWidth();
 
-	FractalRenderPanel* fractal_render_panel = new FractalRenderPanel(main_h_splitter_);
+	FractalRenderPanel* render_panel = new FractalRenderPanel(main_h_splitter_);
 	int scroll_bar_width = wxSystemSettings::GetMetric(wxSYS_VSCROLL_X);
-	int sash_initial_position = mandel_properties_panel_->GetBestSize().GetWidth() + (scroll_bar_width * 2);
-	main_h_splitter_->SplitVertically(mandel_properties_panel_, fractal_render_panel, sash_initial_position);
+	int sash_initial_position = properties_panel_width + (scroll_bar_width * 2);
+	main_h_splitter_->SplitVertically(mandel_properties_panel_, render_panel,
+                                    sash_initial_position);
 
-	fractal_render_panel->SetMinSize(wxSize(854, 480));
-	wxSize properties_panel_size = mandel_properties_panel_->GetBestSize();
-	properties_panel_size.SetWidth(properties_panel_size.GetWidth() + scroll_bar_width * 2);
+	render_panel->SetMinSize(wxSize(854, 480));
+	
+	properties_panel_size.SetWidth(properties_panel_width +
+                                 scroll_bar_width * 2);
 	mandel_properties_panel_->SetMinSize(properties_panel_size);
 
 	palette_panel_ = new PalettePanel(this);
-	palette_panel_->SetMinSize(wxSize(-1, 128));
 
-	render_progress_gauge_ = new wxGauge(this, wxID_ANY, 1000, wxDefaultPosition, wxDefaultSize, wxGA_HORIZONTAL | wxGA_PROGRESS | wxGA_SMOOTH);
+	render_progress_gauge_ = new wxGauge(this, wxID_ANY, 1000, wxDefaultPosition,
+                                       wxDefaultSize, (wxGA_HORIZONTAL | 
+                                       wxGA_PROGRESS | wxGA_SMOOTH));
 
 
 	wxBoxSizer* main_v_box_sizer = new wxBoxSizer(wxVERTICAL);
-	main_v_box_sizer->Add(main_h_splitter_, wxSizerFlags().Expand().Proportion(1));
+	main_v_box_sizer->Add(main_h_splitter_,
+                        wxSizerFlags().Expand().Proportion(1));
 	main_v_box_sizer->Add(palette_panel_, wxSizerFlags().Expand());
 	main_v_box_sizer->Add(render_progress_gauge_, wxSizerFlags().Expand());
 
@@ -91,7 +109,7 @@ MandelExploreFrame::MandelExploreFrame(const wxString& title) : wxFrame(0, -1, t
 	main_v_box_sizer->Fit(this);
 	Centre();
 
-	fractal_render_panel->SetMinSize(wxSize(-1, -1));
+	render_panel->SetMinSize(wxSize(-1, -1));
 	mandel_properties_panel_->SetMinSize(wxSize(-1, -1));
 
 	mandel_properties_panel_->FitColumns();
@@ -166,7 +184,10 @@ void MandelExploreFrame::OnPropertiesButton(wxCommandEvent & event)
 	if (main_h_splitter_->IsSashInvisible())
 	{
 		int scroll_bar_width = wxSystemSettings::GetMetric(wxSYS_VSCROLL_X);
-		int sash_initial_position = mandel_properties_panel_->GetBestSize().GetWidth() + (scroll_bar_width * 2);
+    wxSize properties_panel_size = mandel_properties_panel_->GetBestSize();
+    int properties_panel_width = properties_panel_size.GetWidth();
+		int sash_initial_position = properties_panel_width +
+                                (scroll_bar_width * 2);
 		main_h_splitter_->SetSashPosition(sash_initial_position);
 		mandel_properties_panel_->Show(true);
 		main_h_splitter_->SetSashInvisible(false);
@@ -193,7 +214,8 @@ void MandelExploreFrame::OnToolBarMouseOver(wxCommandEvent & event)
 	switch (event.GetSelection())
 	{
 	case ID_TOOLBAR_ZOOM:
-		this->SetStatusText("Zoom: Left click to zoom in, right click to zoom out, middle click to slide");
+		this->SetStatusText("Zoom: Left click to zoom in, right click to zoom out,"
+                        "middle click to slide");
 		break;
 	case wxID_ANY:
 		this->SetStatusText("");

@@ -1,4 +1,4 @@
-#// Copyright 2018 Andrew Reisdorph
+// Copyright 2018 Andrew Reisdorph
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files(the "Software"), to deal
@@ -18,23 +18,40 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
 
-#ifndef PALETTE_PANEL_H
-#define PALETTE_PANEL_H
+#ifndef WAVE_CONTROL_H
+#define WAVE_CONTROL_H
+
+#include <math.h>
 
 #include <wx/wx.h>
 
-#include "waves_palette_panel.h"
-#include "fractal_settings.h"
+#include "waves_color_mapper.h"
 
-class PalettePanel : public wxPanel
-{
-private:
-	ColorMode color_mode_;
-  WavesPalettePanel *waves_palette_panel_;
+wxDECLARE_EVENT(EVT_WAVE_CONTROL_CHANGE, wxCommandEvent);
 
+class WaveControl : public wxPanel {
 
-public:
-	PalettePanel(wxWindow *parent);
+ public:
+  WaveControl(wxWindow *parent, wxString ColorName);
+  Wave GetWave();
+
+ private:
+  struct Wave wave_;
+
+  wxString color_name_;
+  wxSlider *amplitude_slider_;
+  wxSlider *period_slider_;
+  wxSlider *phase_slider_;
+  wxTextCtrl *amplitude_text_ctrl_;
+  wxTextCtrl *period_text_ctrl_;
+  wxTextCtrl *phase_text_ctrl_;
+
+  void InitializeUI();
+  void UpdateSettings();
+  void OnSliderChange(wxCommandEvent &event);
+  void OnWaveChange(wxCommandEvent &event);
+
+  wxDECLARE_EVENT_TABLE();
 };
 
 #endif
