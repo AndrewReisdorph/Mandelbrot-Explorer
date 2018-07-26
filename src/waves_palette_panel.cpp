@@ -19,6 +19,7 @@
 // IN THE SOFTWARE.
 
 #include <ctime>
+#include <cstdlib>
 
 #include "waves_palette_panel.h"
 
@@ -167,9 +168,9 @@ void ColorDisplayPanel::OnPaint(wxPaintEvent& event) {
     row_y_value = 1 + y_delta;
 
     for (int row_iter = 0; row_iter < draw_area_height; row_iter++) {
-      red_distance = abs(red_value - row_y_value);
-      green_distance = abs(green_value - row_y_value);
-      blue_distance = abs(blue_value - row_y_value);
+      red_distance = fabs(red_value - row_y_value);
+      green_distance = fabs(green_value - row_y_value);
+      blue_distance = fabs(blue_value - row_y_value);
       row_y_value -= y_delta;
 
       if (red_distance < green_distance && red_distance < blue_distance) {
