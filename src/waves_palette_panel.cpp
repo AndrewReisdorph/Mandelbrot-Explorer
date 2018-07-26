@@ -1,4 +1,4 @@
-#// Copyright 2018 Andrew Reisdorph
+// Copyright 2018 Andrew Reisdorph
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files(the "Software"), to deal
@@ -55,8 +55,19 @@ void WavesPalettePanel::InitializeUI() {
 
   main_v_sizer->Add(channel_settings_h_sizer,
     wxSizerFlags().Expand().Proportion(1));
+#ifdef __linux__
+  // Setting the window style to wxBORDER_SUNKEN does not show any border on
+  // linux. Therefore, add a 3 pixel border around the channel graph and color
+  // display to give them the seperation they seperation they have on other 
+  // platforms.
+  main_v_sizer->Add(channel_graph_panel_,
+                    wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT|wxDOWN,3));
+  main_v_sizer->Add(color_display_panel_,
+                    wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT,3));
+#else
   main_v_sizer->Add(channel_graph_panel_, wxSizerFlags().Expand());
   main_v_sizer->Add(color_display_panel_, wxSizerFlags().Expand());
+#endif
 
   SetSizer(main_v_sizer);
 
