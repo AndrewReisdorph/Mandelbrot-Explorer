@@ -121,13 +121,14 @@ ColorDisplayPanel::ColorDisplayPanel(
 void ColorDisplayPanel::OnPaint(wxPaintEvent& event) {
 
   wxAutoBufferedPaintDC dc(this);
-  wxBrush background_brush = wxBrush(wxColour(0, 12, 22, 255), wxBRUSHSTYLE_SOLID);
+  wxBrush background_brush = wxBrush(wxColour(29, 30, 30, 255),
+                                     wxBRUSHSTYLE_SOLID);
   dc.SetBrush(background_brush);
 
   int border_height = wxSystemSettings::GetMetric(wxSYS_EDGE_Y);
   wxSize panel_size = GetSize();
   int height = panel_size.GetHeight();
-  int draw_area_height = height - 2 * border_height;
+  int draw_area_height = height - (2 * border_height);
   int width = panel_size.GetWidth();
 
   // Draw background color
@@ -138,107 +139,74 @@ void ColorDisplayPanel::OnPaint(wxPaintEvent& event) {
   Wave green_wave;
   Wave blue_wave;
   color_mapper_->GetWaves(&red_wave, &green_wave, &blue_wave);
+
   double angle = 0.0;
   double angle_delta = 0.01;
-  clock_t begin = clock();
-  dc.SetPen(wxPen(wxColour(255, 0, 0), 1));
-  double red_angle;
-  double red_value;
-  double red_distance;
-  double green_angle;
-  double green_value;
-  double green_distance;
-  double blue_angle;
-  double blue_value;
-  double blue_distance;
-  double row_y_value;
-  double y_delta = 2.0 / (double)(draw_area_height - 4);
-  bool red_most_prominent;
-  bool green_most_prominent;
-  bool blue_most_prominent;
 
+  double amplitude_scale = draw_area_height / 2.0;
+
+  double next_red_angle;
+  double next_red_value;
+  double next_green_angle;
+  double next_green_value;
+  double next_blue_angle;
+  double next_blue_value;
+
+  double red_amplitude = (amplitude_scale - 1) * red_wave.amplitude;
+  double green_amplitude = (amplitude_scale - 1) * green_wave.amplitude;
+  double blue_amplitude = (amplitude_scale - 1) * blue_wave.amplitude;
+
+  double red_angle_delta = red_wave.period * angle_delta;
+  double green_angle_delta = green_wave.period * angle_delta;
+  double blue_angle_delta = blue_wave.period * angle_delta;
+
+  double last_red_angle = red_wave.period * angle + red_wave.phase;
+  double last_red_value = amplitude_scale +
+                          red_amplitude * sin(last_red_angle);
+  double last_green_angle = green_wave.period * angle + green_wave.phase;
+  double last_green_value = amplitude_scale +
+                            green_amplitude * sin(last_green_angle);
+  double last_blue_angle = blue_wave.period * angle + blue_wave.phase;
+  double last_blue_value = amplitude_scale +
+                           blue_amplitude * sin(last_blue_angle);
+
+  // Because of the overhead of calling dc.SetPen, it is faster to draw each
+  // wave individually. 
+
+  angle = 0.0;
+  dc.SetPen(wxPen(wxColour(242,19,19),2));
   for (int column_iter = 0; column_iter < width; column_iter++) {
-    red_angle = red_wave.period * angle + red_wave.phase;
-    red_value = red_wave.amplitude * sin(red_angle);
-    green_angle = green_wave.period * angle + green_wave.phase;
-    green_value = green_wave.amplitude * sin(green_angle);
-    blue_angle = blue_wave.period * angle + blue_wave.phase;
-    blue_value = blue_wave.amplitude * sin(blue_angle);
-    row_y_value = 1 + y_delta;
-
-    for (int row_iter = 0; row_iter < draw_area_height; row_iter++) {
-      red_distance = abs(red_value - row_y_value);
-      green_distance = abs(green_value - row_y_value);
-      blue_distance = abs(blue_value - row_y_value);
-      row_y_value -= y_delta;
-
-      if (red_distance < green_distance && red_distance < blue_distance) {
-        red_most_prominent = true;
-        green_most_prominent = false;
-        blue_most_prominent = false;
-      } else if (green_distance < red_distance && green_distance < blue_distance) {
-        red_most_prominent = false;
-        green_most_prominent = true;
-        blue_most_prominent = false;
-      } else {
-        red_most_prominent = false;
-        green_most_prominent = false;
-        blue_most_prominent = true;
-      }
-
-      if (red_distance < 0.065) {
-        if (red_distance < 0.015) {
-          dc.SetPen(wxPen(wxColour(255, 0, 0), 1));
-        } else if (red_distance < 0.025) {
-          dc.SetPen(wxPen(wxColour(248, 0, 0), 1));
-        } else if (red_distance < 0.045) {
-          dc.SetPen(wxPen(wxColour(146, 4, 8), 1));
-        } else {
-          dc.SetPen(wxPen(wxColour(58, 9, 16), 1));
-        }
-        dc.DrawPoint(column_iter, row_iter);
-        continue;
-      }
-
-     if (green_distance < 0.065) {
-        if (green_distance < 0.015) {
-          dc.SetPen(wxPen(wxColour(0, 255, 0), 1));
-        } else if (green_distance < 0.025) {
-          dc.SetPen(wxPen(wxColour(0, 247, 8), 1));
-        } else if (green_distance < 0.045) {
-          dc.SetPen(wxPen(wxColour(0, 158, 13), 1));
-        } else {
-          dc.SetPen(wxPen(wxColour(0, 48, 19), 1));
-        }
-        dc.DrawPoint(column_iter, row_iter);
-        continue;
-      }
-
-     if (blue_distance < 0.065) {
-       if (blue_distance < 0.015) {
-         dc.SetPen(wxPen(wxColour(0, 0, 255), 1));
-       }
-       else if (blue_distance < 0.025) {
-         dc.SetPen(wxPen(wxColour(44, 54, 247), 1));
-       }
-       else if (blue_distance < 0.045) {
-         dc.SetPen(wxPen(wxColour(30, 40, 176), 1));
-       }
-       else {
-         dc.SetPen(wxPen(wxColour(11, 23, 82), 1));
-       }
-       dc.DrawPoint(column_iter, row_iter);
-       continue;
-     }
-
-      
-    }
-
-    angle += angle_delta;
+    next_red_value = amplitude_scale +
+                     red_amplitude * sin(angle + red_wave.phase);
+    dc.DrawLine(column_iter, last_red_value,
+                column_iter + 1, next_red_value);
+    last_red_value = next_red_value;
+    angle += red_angle_delta;
   }
-  clock_t end = clock();
-  double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
-  cout << "time: " << elapsed_secs << endl;
+
+  angle = 0.0;
+  dc.SetPen(wxPen(wxColour(0, 219, 3), 2));
+  for (int column_iter = 0; column_iter < width; column_iter++) {
+    next_green_value = amplitude_scale +
+                       green_amplitude * sin(angle + green_wave.phase);
+    dc.DrawLine(column_iter, last_green_value,
+                column_iter + 1, next_green_value);
+
+    last_green_value = next_green_value;
+    angle += green_angle_delta;
+  }
+
+  angle = 0.0;
+  dc.SetPen(wxPen(wxColour(0, 84, 219), 2));
+  for (int column_iter = 0; column_iter < width; column_iter++) {
+    next_blue_value = amplitude_scale +
+                      blue_amplitude * sin(angle + blue_wave.phase);
+    dc.DrawLine(column_iter, last_blue_value,
+                column_iter + 1, next_blue_value);
+
+    last_blue_value = next_blue_value;
+    angle += blue_angle_delta;
+  }
 }
 
 wxBEGIN_EVENT_TABLE(ChannelGraphPanel, wxPanel)

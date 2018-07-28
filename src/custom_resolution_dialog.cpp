@@ -1,6 +1,27 @@
+// Copyright 2018 Andrew Reisdorph
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files(the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions :
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+// IN THE SOFTWARE.
+
 #include "custom_resolution_dialog.h"
 
-CustomResolutionDialog::CustomResolutionDialog() : wxDialog(NULL, -1, "Custom Resolution")
+CustomResolutionDialog::CustomResolutionDialog() : wxDialog(
+    NULL, -1, "Custom Resolution")
 {
 	wxBoxSizer *main_v_sizer = new wxBoxSizer(wxVERTICAL);
 	wxBoxSizer *button_h_sizer = new wxBoxSizer(wxHORIZONTAL);
@@ -17,10 +38,13 @@ CustomResolutionDialog::CustomResolutionDialog() : wxDialog(NULL, -1, "Custom Re
 	resolution_validator.SetIncludes(validator_char_list);
 
 	wxStaticText *width_static_text = new wxStaticText(this, wxID_ANY, "Width:");
-	width_text_ctrl_ = new wxTextCtrl(this, wxID_ANY, "854", wxDefaultPosition, wxDefaultSize, 0, resolution_validator);
+	width_text_ctrl_ = new wxTextCtrl(this, wxID_ANY, "854", wxDefaultPosition,
+                                    wxDefaultSize, 0, resolution_validator);
 	width_text_ctrl_->Bind(wxEVT_KEY_UP, &CustomResolutionDialog::OnKeyUp, this);
-	wxStaticText *height_static_text = new wxStaticText(this, wxID_ANY, "Height:");
-	height_text_ctrl_ = new wxTextCtrl(this, wxID_ANY, "480", wxDefaultPosition, wxDefaultSize, 0, resolution_validator);
+	wxStaticText *height_static_text = new wxStaticText(this, wxID_ANY,
+                                                      "Height:");
+	height_text_ctrl_ = new wxTextCtrl(this, wxID_ANY, "480", wxDefaultPosition,
+                                     wxDefaultSize, 0, resolution_validator);
 	height_text_ctrl_->Bind(wxEVT_KEY_UP, &CustomResolutionDialog::OnKeyUp, this);
 
 	grid_sizer->Add(width_static_text, 0, wxALIGN_CENTRE_VERTICAL);
