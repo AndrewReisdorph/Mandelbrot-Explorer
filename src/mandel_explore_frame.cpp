@@ -114,9 +114,12 @@ MandelExploreFrame::MandelExploreFrame(const wxString& title) : wxFrame(0, -1,
 
 	palette_panel_ = new PalettePanel(this);
 
+    int gauge_style = (wxGA_HORIZONTAL | wxGA_SMOOTH);
+#if wxMAJOR_VERSION >= 3 && wxMINOR_VERSION >= 1
+    gauge_style |= wxGA_PROGRESS;
+#endif
 	render_progress_gauge_ = new wxGauge(this, wxID_ANY, 1000, wxDefaultPosition,
-                                       wxDefaultSize, (wxGA_HORIZONTAL | 
-                                       wxGA_PROGRESS | wxGA_SMOOTH));
+                                       wxDefaultSize, gauge_style);
 
 
 	wxBoxSizer* main_v_box_sizer = new wxBoxSizer(wxVERTICAL);

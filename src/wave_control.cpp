@@ -72,8 +72,7 @@ void WaveControl::InitializeUI() {
   color_name_font.SetWeight(wxFONTWEIGHT_BOLD);
   color_name_text->SetFont(color_name_font);
 
-  main_h_sizer->Add(color_name_text,
-                    wxSizerFlags().CenterVertical().Border(wxLEFT | wxRIGHT));
+  main_h_sizer->Add(color_name_text,wxSizerFlags().Border(wxLEFT | wxRIGHT).Align(wxALIGN_CENTER_VERTICAL));
   main_h_sizer->Add(slider_panel_grid_sizer,
     wxSizerFlags().Border(wxTOP|wxBOTTOM).Expand().Proportion(1));
 
