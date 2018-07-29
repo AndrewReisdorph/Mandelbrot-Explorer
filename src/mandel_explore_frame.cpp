@@ -18,234 +18,214 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
 
-#include "mandel_explore_frame.h"
-#include "images.h"
+#include "../include/mandel_explore_frame.h"
 
-#include <wx/gdicmn.h> 
+#include <wx/gdicmn.h>
 #ifdef WIN32
 #include <wx/sysopt.h>
 #endif
 
-using namespace std;
+#include "../include/images.h"
+
+using std::cout;
+using std::endl;
 
 MandelExploreFrame::MandelExploreFrame(const wxString& title) : wxFrame(0, -1,
-                                                                        title)
-{
-	wxMenu *file_menu = new wxMenu;
-	file_menu->Append(ID_MENU_QUIT, _T("E&xit\tAlt-X"), _T("Quit this program"));
+                                                                        title) {
+  wxMenu *file_menu = new wxMenu;
+  file_menu->Append(ID_MENU_QUIT, _T("E&xit\tAlt-X"), _T("Quit this program"));
 
-	wxMenuBar *menu_bar = new wxMenuBar;
-	menu_bar->Append(file_menu, _T("&File"));
+  wxMenuBar *menu_bar = new wxMenuBar;
+  menu_bar->Append(file_menu, _T("&File"));
 
-	SetMenuBar(menu_bar);
+  SetMenuBar(menu_bar);
 #ifdef WIN32
-	// Note that under wxMSW toolbar paints tools to reflect system-wide
-	// colours. If you use more than 16 colours in your tool bitmaps, you may
-	// wish to suppress this behaviour, otherwise system colours in your
-	// bitmaps will inadvertently be mapped to system colours. To do this, set
-	// the msw.remap system option before creating the toolbar:
-	wxSystemOptions::SetOption("msw.remap", 0);
+  // Note that under wxMSW toolbar paints tools to reflect system-wide
+  // colours. If you use more than 16 colours in your tool bitmaps, you may
+  // wish to suppress this behaviour, otherwise system colours in your
+  // bitmaps will inadvertently be mapped to system colours. To do this, set
+  // the msw.remap system option before creating the toolbar:
+  wxSystemOptions::SetOption("msw.remap", 0);
 #endif
-	tool_bar_ = CreateToolBar();
-	tool_bar_->SetToolBitmapSize(wxSize(24,24));
-	wxBitmap render_button_bitmap = wxBITMAP_PNG_FROM_DATA(fractal);
-	wxBitmap camera_button_bitmap = wxBITMAP_PNG_FROM_DATA(camera);
-	wxBitmap palette_button_bitmap = wxBITMAP_PNG_FROM_DATA(palette);
-	wxBitmap save_button_bitmap = wxBITMAP_PNG_FROM_DATA(save);
-	wxBitmap video_button_bitmap = wxBITMAP_PNG_FROM_DATA(video);
-	wxBitmap open_button_bitmap = wxBITMAP_PNG_FROM_DATA(folder);
-	wxBitmap select_box_bitmap = wxBITMAP_PNG_FROM_DATA(box);
-	wxBitmap zoom_bitmap = wxBITMAP_PNG_FROM_DATA(zoom);
-	wxBitmap home_bitmap = wxBITMAP_PNG_FROM_DATA(home);
-	wxBitmap properties_bitmap = wxBITMAP_PNG_FROM_DATA(properties);
-	resume_bitmap_ = wxBITMAP_PNG_FROM_DATA(play);
-	pause_bitmap_ = wxBITMAP_PNG_FROM_DATA(pause);
-	cancel_bitmap_ = wxBITMAP_PNG_FROM_DATA(cancel);
+  tool_bar_ = CreateToolBar();
+  tool_bar_->SetToolBitmapSize(wxSize(24, 24));
+  wxBitmap render_button_bitmap = wxBITMAP_PNG_FROM_DATA(fractal);
+  wxBitmap camera_button_bitmap = wxBITMAP_PNG_FROM_DATA(camera);
+  wxBitmap palette_button_bitmap = wxBITMAP_PNG_FROM_DATA(palette);
+  wxBitmap save_button_bitmap = wxBITMAP_PNG_FROM_DATA(save);
+  wxBitmap video_button_bitmap = wxBITMAP_PNG_FROM_DATA(video);
+  wxBitmap open_button_bitmap = wxBITMAP_PNG_FROM_DATA(folder);
+  wxBitmap select_box_bitmap = wxBITMAP_PNG_FROM_DATA(box);
+  wxBitmap zoom_bitmap = wxBITMAP_PNG_FROM_DATA(zoom);
+  wxBitmap home_bitmap = wxBITMAP_PNG_FROM_DATA(home);
+  wxBitmap properties_bitmap = wxBITMAP_PNG_FROM_DATA(properties);
+  resume_bitmap_ = wxBITMAP_PNG_FROM_DATA(play);
+  pause_bitmap_ = wxBITMAP_PNG_FROM_DATA(pause);
+  cancel_bitmap_ = wxBITMAP_PNG_FROM_DATA(cancel);
 
-	tool_bar_->AddTool(ID_TOOLBAR_OPEN, wxT("Open Configuration"),
+  tool_bar_->AddTool(ID_TOOLBAR_OPEN, wxT("Open Configuration"),
                      open_button_bitmap);
-	tool_bar_->AddTool(ID_TOOLBAR_SAVE, wxT("Save Configuration"),
+  tool_bar_->AddTool(ID_TOOLBAR_SAVE, wxT("Save Configuration"),
                      save_button_bitmap);
-	tool_bar_->AddSeparator();
-	tool_bar_->AddTool(ID_TOOLBAR_RENDER, wxT("Render"),
+  tool_bar_->AddSeparator();
+  tool_bar_->AddTool(ID_TOOLBAR_RENDER, wxT("Render"),
                      render_button_bitmap);
-	tool_bar_->AddTool(ID_TOOLBAR_CAPTURE, wxT("Save Image"),
+  tool_bar_->AddTool(ID_TOOLBAR_CAPTURE, wxT("Save Image"),
                      camera_button_bitmap);
-	tool_bar_->AddTool(ID_TOOLBAR_PALETTE, wxT("Palette"),
+  tool_bar_->AddTool(ID_TOOLBAR_PALETTE, wxT("Palette"),
                      palette_button_bitmap);
-	tool_bar_->AddTool(ID_TOOLBAR_PROPERTIES, wxT("Properties"),
+  tool_bar_->AddTool(ID_TOOLBAR_PROPERTIES, wxT("Properties"),
                      properties_bitmap);
-	tool_bar_->AddTool(ID_TOOLBAR_VIDEO, wxT("Render Video"),
+  tool_bar_->AddTool(ID_TOOLBAR_VIDEO, wxT("Render Video"),
                      video_button_bitmap);
-	tool_bar_->AddSeparator();
-	tool_bar_->AddTool(ID_TOOLBAR_PAUSE_RESUME, wxT("Pause/Resume Render"),
+  tool_bar_->AddSeparator();
+  tool_bar_->AddTool(ID_TOOLBAR_PAUSE_RESUME, wxT("Pause/Resume Render"),
                      resume_bitmap_);
-	tool_bar_->AddTool(ID_TOOLBAR_CANCEL, wxT("Cancel Render"),
+  tool_bar_->AddTool(ID_TOOLBAR_CANCEL, wxT("Cancel Render"),
                      cancel_bitmap_);
-	tool_bar_->AddStretchableSpace();
-	tool_bar_->AddTool(ID_TOOLBAR_HOME, wxT("Home"),
+  tool_bar_->AddStretchableSpace();
+  tool_bar_->AddTool(ID_TOOLBAR_HOME, wxT("Home"),
                      home_bitmap);
-	tool_bar_->AddTool(ID_TOOLBAR_SELECT, wxT("Selection Tool"),
+  tool_bar_->AddTool(ID_TOOLBAR_SELECT, wxT("Selection Tool"),
                      select_box_bitmap);
-	tool_bar_->AddTool(ID_TOOLBAR_ZOOM, wxT("Zoom"),
+  tool_bar_->AddTool(ID_TOOLBAR_ZOOM, wxT("Zoom"),
                      zoom_bitmap);
-	tool_bar_->Realize();
+  tool_bar_->Realize();
 
-	CreateStatusBar(1);
+  CreateStatusBar(1);
 
-	
-	main_h_splitter_ = new wxSplitterWindow(this);
 
-	mandel_properties_panel_ = new MandelPropertiesPanel(main_h_splitter_);
+  main_h_splitter_ = new wxSplitterWindow(this);
+
+  mandel_properties_panel_ = new MandelPropertiesPanel(main_h_splitter_);
   wxSize properties_panel_size = mandel_properties_panel_->GetBestSize();
   int properties_panel_width = properties_panel_size.GetWidth();
 
-	FractalRenderPanel* render_panel = new FractalRenderPanel(main_h_splitter_);
-	int scroll_bar_width = wxSystemSettings::GetMetric(wxSYS_VSCROLL_X);
-	int sash_initial_position = properties_panel_width + (scroll_bar_width * 2);
-	main_h_splitter_->SplitVertically(mandel_properties_panel_, render_panel,
+  FractalRenderPanel* render_panel = new FractalRenderPanel(main_h_splitter_);
+  int scroll_bar_width = wxSystemSettings::GetMetric(wxSYS_VSCROLL_X);
+  int sash_initial_position = properties_panel_width + (scroll_bar_width * 2);
+  main_h_splitter_->SplitVertically(mandel_properties_panel_, render_panel,
                                     sash_initial_position);
 
-	render_panel->SetMinSize(wxSize(854, 480));
-	
-	properties_panel_size.SetWidth(properties_panel_width +
-                                 scroll_bar_width * 2);
-	mandel_properties_panel_->SetMinSize(properties_panel_size);
+  render_panel->SetMinSize(wxSize(854, 480));
 
-	palette_panel_ = new PalettePanel(this);
+  properties_panel_size.SetWidth(properties_panel_width +
+                                 scroll_bar_width * 2);
+  mandel_properties_panel_->SetMinSize(properties_panel_size);
+
+  palette_panel_ = new PalettePanel(this);
 
     int gauge_style = (wxGA_HORIZONTAL | wxGA_SMOOTH);
-#if wxMAJOR_VERSION >= 3 && wxMINOR_VERSION >= 1
+  #if wxMAJOR_VERSION >= 3 && wxMINOR_VERSION >= 1
     gauge_style |= wxGA_PROGRESS;
-#endif
-	render_progress_gauge_ = new wxGauge(this, wxID_ANY, 1000, wxDefaultPosition,
+  #endif
+  render_progress_gauge_ = new wxGauge(this, wxID_ANY, 1000, wxDefaultPosition,
                                        wxDefaultSize, gauge_style);
 
 
-	wxBoxSizer* main_v_box_sizer = new wxBoxSizer(wxVERTICAL);
-	main_v_box_sizer->Add(main_h_splitter_,
+  wxBoxSizer* main_v_box_sizer = new wxBoxSizer(wxVERTICAL);
+  main_v_box_sizer->Add(main_h_splitter_,
                         wxSizerFlags().Expand().Proportion(1));
-	main_v_box_sizer->Add(palette_panel_, wxSizerFlags().Expand());
-	main_v_box_sizer->Add(render_progress_gauge_, wxSizerFlags().Expand());
+  main_v_box_sizer->Add(palette_panel_, wxSizerFlags().Expand());
+  main_v_box_sizer->Add(render_progress_gauge_, wxSizerFlags().Expand());
 
-	SetSizer(main_v_box_sizer);
-	main_v_box_sizer->Fit(this);
-	Centre();
+  SetSizer(main_v_box_sizer);
+  main_v_box_sizer->Fit(this);
+  Centre();
 
-	render_panel->SetMinSize(wxSize(-1, -1));
-	mandel_properties_panel_->SetMinSize(wxSize(-1, -1));
+  render_panel->SetMinSize(wxSize(-1, -1));
+  mandel_properties_panel_->SetMinSize(wxSize(-1, -1));
 
-	mandel_properties_panel_->FitColumns();
+  mandel_properties_panel_->FitColumns();
 }
 
-void MandelExploreFrame::OnOpenConfigurationButton(wxCommandEvent & event)
-{
-	cout << "Open Config" << endl;
+void MandelExploreFrame::OnOpenConfigurationButton(wxCommandEvent & event) {
+  cout << "Open Config" << endl;
 }
 
-void MandelExploreFrame::OnSaveConfigurationButton(wxCommandEvent & event)
-{
-	cout << "Save Config" << endl;
+void MandelExploreFrame::OnSaveConfigurationButton(wxCommandEvent & event) {
+  cout << "Save Config" << endl;
 }
 
-void MandelExploreFrame::OnRenderButton(wxCommandEvent & event)
-{
-	cout << "Render" << endl;
+void MandelExploreFrame::OnRenderButton(wxCommandEvent & event) {
+  cout << "Render" << endl;
 }
 
-void MandelExploreFrame::OnCaptureButton(wxCommandEvent & event)
-{
-	cout << "Capture" << endl;
+void MandelExploreFrame::OnCaptureButton(wxCommandEvent & event) {
+  cout << "Capture" << endl;
 }
 
-void MandelExploreFrame::OnPaletteButton(wxCommandEvent & event)
-{
-	if (palette_panel_->IsShown())
-	{
-		palette_panel_->Hide();
-	}
-	else
-	{
-		palette_panel_->Show();
-	}
-	
-	Layout();
+void MandelExploreFrame::OnPaletteButton(wxCommandEvent & event) {
+  if (palette_panel_->IsShown()) {
+    palette_panel_->Hide();
+  } else {
+    palette_panel_->Show();
+  }
+
+  Layout();
 }
 
-void MandelExploreFrame::OnVideoButton(wxCommandEvent & event)
-{
-	cout << "Video" << endl;
+void MandelExploreFrame::OnVideoButton(wxCommandEvent & event) {
+  cout << "Video" << endl;
 }
 
-void MandelExploreFrame::OnPauseResumeButton(wxCommandEvent & event)
-{
-	cout << "Pause/Resume" << endl;
+void MandelExploreFrame::OnPauseResumeButton(wxCommandEvent & event) {
+  cout << "Pause/Resume" << endl;
 }
 
-void MandelExploreFrame::OnCancelButton(wxCommandEvent & event)
-{
-	cout << "Cancel" << endl;
+void MandelExploreFrame::OnCancelButton(wxCommandEvent & event) {
+  cout << "Cancel" << endl;
 }
 
-void MandelExploreFrame::OnSelectButton(wxCommandEvent & event)
-{
-	cout << "Select" << endl;
+void MandelExploreFrame::OnSelectButton(wxCommandEvent & event) {
+  cout << "Select" << endl;
 }
 
-void MandelExploreFrame::OnZoomButton(wxCommandEvent & event)
-{
-	cout << "Zoom" << endl;
+void MandelExploreFrame::OnZoomButton(wxCommandEvent & event) {
+  cout << "Zoom" << endl;
 }
 
-void MandelExploreFrame::OnHomeButton(wxCommandEvent & event)
-{
-	cout << "Home" << endl;
+void MandelExploreFrame::OnHomeButton(wxCommandEvent & event) {
+  cout << "Home" << endl;
 }
 
-void MandelExploreFrame::OnPropertiesButton(wxCommandEvent & event)
-{
-	if (main_h_splitter_->IsSashInvisible())
-	{
-		int scroll_bar_width = wxSystemSettings::GetMetric(wxSYS_VSCROLL_X);
+void MandelExploreFrame::OnPropertiesButton(wxCommandEvent & event) {
+  if (main_h_splitter_->IsSashInvisible()) {
+    int scroll_bar_width = wxSystemSettings::GetMetric(wxSYS_VSCROLL_X);
     wxSize properties_panel_size = mandel_properties_panel_->GetBestSize();
     int properties_panel_width = properties_panel_size.GetWidth();
-		int sash_initial_position = properties_panel_width +
+    int sash_initial_position = properties_panel_width +
                                 (scroll_bar_width * 2);
-		main_h_splitter_->SetSashPosition(sash_initial_position);
-		mandel_properties_panel_->Show(true);
-		main_h_splitter_->SetSashInvisible(false);
-		mandel_properties_panel_->FitColumns();
-	}
-	else
-	{
-		main_h_splitter_->SetSashPosition(1);
-		mandel_properties_panel_->Show(false);
-		main_h_splitter_->SetSashInvisible();
-	}
+    main_h_splitter_->SetSashPosition(sash_initial_position);
+    mandel_properties_panel_->Show(true);
+    main_h_splitter_->SetSashInvisible(false);
+    mandel_properties_panel_->FitColumns();
+  } else {
+    main_h_splitter_->SetSashPosition(1);
+    mandel_properties_panel_->Show(false);
+    main_h_splitter_->SetSashInvisible();
+  }
 
-	Refresh();
-	Layout();
+  Refresh();
+  Layout();
 }
 
-void MandelExploreFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
-{
-	wxExit();
+void MandelExploreFrame::OnQuit(wxCommandEvent& WXUNUSED(event)) {
+  wxExit();
 }
 
-void MandelExploreFrame::OnToolBarMouseOver(wxCommandEvent & event)
-{
-	switch (event.GetSelection())
-	{
-	case ID_TOOLBAR_ZOOM:
-		this->SetStatusText("Zoom: Left click to zoom in, right click to zoom out,"
-                        "middle click to slide");
-		break;
-	case wxID_ANY:
-		this->SetStatusText("");
-		break;
-	default:
-		break;
-	}
+void MandelExploreFrame::OnToolBarMouseOver(wxCommandEvent & event) {
+  switch (event.GetSelection()) {
+    case ID_TOOLBAR_ZOOM:
+      this->SetStatusText("Zoom: Left click to zoom in, right click to zoom"
+                          " out, middle click to slide");
+      break;
+    case wxID_ANY:
+      this->SetStatusText("");
+      break;
+    default:
+      break;
+  }
 }
 
 wxBEGIN_EVENT_TABLE(MandelExploreFrame, wxFrame)

@@ -18,7 +18,7 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
 
-#include "wave_control.h"
+#include "../include/wave_control.h"
 
 wxDEFINE_EVENT(EVT_WAVE_CONTROL_CHANGE, wxCommandEvent);
 
@@ -34,7 +34,7 @@ void WaveControl::InitializeUI() {
   SetWindowStyle(wxBORDER_SUNKEN);
 
   wxBoxSizer *main_h_sizer = new wxBoxSizer(wxHORIZONTAL);
-  
+
   wxFlexGridSizer *slider_panel_grid_sizer = new wxFlexGridSizer(3, 3, 5);
   slider_panel_grid_sizer->AddGrowableCol(2, 1);
 
@@ -72,7 +72,9 @@ void WaveControl::InitializeUI() {
   color_name_font.SetWeight(wxFONTWEIGHT_BOLD);
   color_name_text->SetFont(color_name_font);
 
-  main_h_sizer->Add(color_name_text,wxSizerFlags().Border(wxLEFT | wxRIGHT).Align(wxALIGN_CENTER_VERTICAL));
+  main_h_sizer->Add(color_name_text,
+                    wxSizerFlags().Border(wxLEFT | wxRIGHT)
+                    .Align(wxALIGN_CENTER_VERTICAL));
   main_h_sizer->Add(slider_panel_grid_sizer,
     wxSizerFlags().Border(wxTOP|wxBOTTOM).Expand().Proportion(1));
 
@@ -81,8 +83,7 @@ void WaveControl::InitializeUI() {
   main_h_sizer->Fit(this);
 }
 
-void WaveControl::UpdateSettings()
-{
+void WaveControl::UpdateSettings() {
   wave_.period = period_slider_->GetValue() / 100.0;
   wave_.amplitude = (amplitude_slider_->GetValue() / 500.0) - 1.0;
   wave_.phase = (phase_slider_->GetValue() / 500.0) * M_PI;
@@ -95,14 +96,12 @@ void WaveControl::UpdateSettings()
   wxPostEvent(m_parent, event);
 }
 
-void WaveControl::OnSliderChange(wxCommandEvent & event)
-{
+void WaveControl::OnSliderChange(wxCommandEvent & event) {
   UpdateSettings();
   event.Skip();
 }
 
-Wave WaveControl::GetWave()
-{
+Wave WaveControl::GetWave() {
   return wave_;
 }
 

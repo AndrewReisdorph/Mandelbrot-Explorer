@@ -1,4 +1,4 @@
-#// Copyright 2018 Andrew Reisdorph
+// Copyright 2018 Andrew Reisdorph
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files(the "Software"), to deal
@@ -18,31 +18,29 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
 
-#ifndef CUSTOM_RESOLUTION_DIALOG_H
-#define CUSTOM_RESOLUTION_DIALOG_H
+#ifndef INCLUDE_CUSTOM_RESOLUTION_DIALOG_H_
+#define INCLUDE_CUSTOM_RESOLUTION_DIALOG_H_
 
 #include <wx/wx.h>
 #include <wx/valnum.h>
 
-class CustomResolutionDialog : public wxDialog
-{
-private:
-	void OnCancelButton(wxCommandEvent& event);
-	void OnOKButton(wxCommandEvent& event);
-	void OnKeyUp(wxKeyEvent& event);
-	void ValidateDimensions();
+class CustomResolutionDialog : public wxDialog {
+ private:
+  void OnCancelButton(wxCommandEvent& event);
+  void OnOKButton(wxCommandEvent& event);
+  void OnKeyUp(wxKeyEvent& event);
+  void ValidateDimensions();
 
-	wxTextCtrl *width_text_ctrl_;
-	wxTextCtrl *height_text_ctrl_;
+  wxTextCtrl *width_text_ctrl_;
+  wxTextCtrl *height_text_ctrl_;
 
-	long width_;
-	long height_;
+  long width_;
+  long height_;
 
-public:
-	CustomResolutionDialog();
-	long GetWidth();
-	long GetHeight();
-
+ public:
+  CustomResolutionDialog();
+  long GetWidth();
+  long GetHeight();
 };
 
-#endif
+#endif  // INCLUDE_CUSTOM_RESOLUTION_DIALOG_H_

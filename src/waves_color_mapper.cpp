@@ -20,30 +20,25 @@
 
 #include <math.h>
 
-#include "waves_color_mapper.h"
+#include "../include/waves_color_mapper.h"
 
-WavesColorMapper::WavesColorMapper()
-{
-
+WavesColorMapper::WavesColorMapper() {
 }
 
 void WavesColorMapper::Configure(Wave red_wave, Wave green_wave,
-                                 Wave blue_wave, double angle_step)
-{
-	red_wave_ = red_wave;
-	green_wave_ = green_wave;
-	blue_wave_ = blue_wave;
-	angle_step_ = angle_step;
+                                 Wave blue_wave, double angle_step) {
+  red_wave_ = red_wave;
+  green_wave_ = green_wave;
+  blue_wave_ = blue_wave;
+  angle_step_ = angle_step;
 }
 
 Color WavesColorMapper::GetColor(uint64_t iteration, double magnitude = 0.0,
-                                 bool loglog=false)
-{
-  return { 0,0,0 };
+                                 bool loglog = false) {
+  return { 0, 0, 0 };
 }
 
-Color WavesColorMapper::GetColor(double angle)
-{
+Color WavesColorMapper::GetColor(double angle) {
   double half_channel_max = (255.0 / 2.0);
   double red_angle = red_wave_.period * angle + red_wave_.phase;
   double red_value = 255 - (half_channel_max -
@@ -60,8 +55,7 @@ Color WavesColorMapper::GetColor(double angle)
   return { (uint8_t)red_value, (uint8_t)green_value, (uint8_t)blue_value };
 }
 
-void WavesColorMapper::GetWaves(Wave * red, Wave * green, Wave * blue)
-{
+void WavesColorMapper::GetWaves(Wave * red, Wave * green, Wave * blue) {
   *red = red_wave_;
   *green = green_wave_;
   *blue = blue_wave_;

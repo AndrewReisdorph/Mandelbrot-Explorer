@@ -18,14 +18,14 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
 
-#ifndef WAVES_PALETTE_PANEL_H
-#define WAVES_PALETTE_PANEL_H
+#ifndef INCLUDE_WAVES_PALETTE_PANEL_H_
+#define INCLUDE_WAVES_PALETTE_PANEL_H_
 
 #include <wx/dcbuffer.h>
 #include <wx/wx.h>
 
-#include "wave_control.h"
-#include "waves_color_mapper.h"
+#include "./wave_control.h"
+#include "./waves_color_mapper.h"
 
 class ChannelGraphPanel : public wxPanel {
  public:
@@ -39,12 +39,11 @@ class ChannelGraphPanel : public wxPanel {
 };
 
 class ColorDisplayPanel : public wxPanel {
-public:
+ public:
   WavesColorMapper * color_mapper_;
   ColorDisplayPanel(wxWindow * parent, WavesColorMapper *color_mapper);
 
-private:
-  
+ private:
   void OnPaint(wxPaintEvent& event);
 
   wxDECLARE_EVENT_TABLE();
@@ -52,7 +51,7 @@ private:
 
 class WavesPalettePanel : public wxPanel {
  public:
-  WavesPalettePanel(wxWindow * parent);
+  explicit WavesPalettePanel(wxWindow * parent);
   ~WavesPalettePanel();
 
  private:
@@ -71,4 +70,4 @@ class WavesPalettePanel : public wxPanel {
   wxDECLARE_EVENT_TABLE();
 };
 
-#endif
+#endif  // INCLUDE_WAVES_PALETTE_PANEL_H_

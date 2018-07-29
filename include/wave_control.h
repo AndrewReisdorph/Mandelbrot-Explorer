@@ -18,19 +18,18 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
 
-#ifndef WAVE_CONTROL_H
-#define WAVE_CONTROL_H
+#ifndef INCLUDE_WAVE_CONTROL_H_
+#define INCLUDE_WAVE_CONTROL_H_
 
 #include <math.h>
 
 #include <wx/wx.h>
 
-#include "waves_color_mapper.h"
+#include "./waves_color_mapper.h"
 
 wxDECLARE_EVENT(EVT_WAVE_CONTROL_CHANGE, wxCommandEvent);
 
 class WaveControl : public wxPanel {
-
  public:
   WaveControl(wxWindow *parent, wxString ColorName);
   Wave GetWave();
@@ -54,4 +53,4 @@ class WaveControl : public wxPanel {
   wxDECLARE_EVENT_TABLE();
 };
 
-#endif
+#endif  // INCLUDE_WAVE_CONTROL_H_

@@ -18,18 +18,17 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
 
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef INCLUDE_MAIN_H_
+#define INCLUDE_MAIN_H_
 
 #include <wx/app.h>
-#include <wx/image.h> 
+#include <wx/image.h>
 
-class MandelExplorerApp : public wxApp
-{
-private:
-	bool OnInit();
+class MandelExplorerApp : public wxApp {
+ private:
+  bool OnInit();
 };
 
 wxDECLARE_APP(MandelExplorerApp);
 
-#endif
+#endif  // INCLUDE_MAIN_H_

@@ -18,23 +18,23 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
 
-#include "main.h"
-#include "mandel_explore_frame.h"
+#include "../include/main.h"
 
-#include<iostream>
+#include <iostream>
 
-using namespace std;
+#include "../include/mandel_explore_frame.h"
+
+using std::cout;
 
 wxIMPLEMENT_APP_CONSOLE(MandelExplorerApp);
 
-bool MandelExplorerApp::OnInit()
-{
-	this->SetAppName("Mandelbrot Explorer");
+bool MandelExplorerApp::OnInit() {
+  this->SetAppName("Mandelbrot Explorer");
 
-	wxInitAllImageHandlers();
+  wxInitAllImageHandlers();
 
-	MandelExploreFrame* frame = new MandelExploreFrame("Mandelbrot Explorer");
-	frame->Show(true);
+  MandelExploreFrame* frame = new MandelExploreFrame("Mandelbrot Explorer");
+  frame->Show(true);
 
-	return true;
+  return true;
 }

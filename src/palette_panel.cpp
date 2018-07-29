@@ -18,7 +18,7 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
 
-#include "palette_panel.h"
+#include "../include/palette_panel.h"
 
 PalettePanel::PalettePanel(wxWindow * parent) : wxPanel(parent) {
   color_mode_ = kWaves;

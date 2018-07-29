@@ -7,7 +7,6 @@ set (MandelbrotExplorer_VERSION_MINOR 0)
 find_package(wxWidgets 3.0 COMPONENTS core base adv propgrid REQUIRED)
 include(${wxWidgets_USE_FILE})
 
-include_directories(include)
 
 IF(MSVC)
     # using Visual Studio C++

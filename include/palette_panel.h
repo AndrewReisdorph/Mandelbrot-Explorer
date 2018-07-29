@@ -1,4 +1,4 @@
-#// Copyright 2018 Andrew Reisdorph
+// Copyright 2018 Andrew Reisdorph
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files(the "Software"), to deal
@@ -18,23 +18,21 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
 
-#ifndef PALETTE_PANEL_H
-#define PALETTE_PANEL_H
+#ifndef INCLUDE_PALETTE_PANEL_H_
+#define INCLUDE_PALETTE_PANEL_H_
 
 #include <wx/wx.h>
 
-#include "waves_palette_panel.h"
-#include "fractal_settings.h"
+#include "./waves_palette_panel.h"
+#include "./fractal_settings.h"
 
-class PalettePanel : public wxPanel
-{
-private:
-	ColorMode color_mode_;
+class PalettePanel : public wxPanel {
+ private:
+  ColorMode color_mode_;
   WavesPalettePanel *waves_palette_panel_;
 
-
-public:
-	PalettePanel(wxWindow *parent);
+ public:
+  explicit PalettePanel(wxWindow *parent);
 };
 
-#endif
+#endif  // INCLUDE_PALETTE_PANEL_H_

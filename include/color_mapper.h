@@ -1,4 +1,4 @@
-#// Copyright 2018 Andrew Reisdorph
+// Copyright 2018 Andrew Reisdorph
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files(the "Software"), to deal
@@ -18,8 +18,8 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
 
-#ifndef COLOR_MAPPER_H
-#define COLOR_MAPPER_H
+#ifndef INCLUDE_COLOR_MAPPER_H_
+#define INCLUDE_COLOR_MAPPER_H_
 
 #include <cstdint>
 
@@ -30,8 +30,8 @@ typedef struct Color {
 } Color;
 
 class ColorMapper {
-public:
-	virtual Color GetColor(uint64_t iteration, double magnitude, bool loglog) = 0;
+ public:
+  virtual Color GetColor(uint64_t iteration, double magnitude, bool loglog) = 0;
 };
 
-#endif
+#endif  // INCLUDE_COLOR_MAPPER_H_

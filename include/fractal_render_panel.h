@@ -18,22 +18,21 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
 
-#ifndef FRACTAL_RENDER_PANEL_H
-#define FRACTAL_RENDER_PANEL_H
+#ifndef INCLUDE_FRACTAL_RENDER_PANEL_H_
+#define INCLUDE_FRACTAL_RENDER_PANEL_H_
 
 #include <wx/wx.h>
 #include <wx/dcbuffer.h>
 
-class FractalRenderPanel : public wxScrolledWindow
-{
-private:
-	void OnPaint(wxPaintEvent& event);
-	void OnResize(wxSizeEvent& event);
+class FractalRenderPanel : public wxScrolledWindow {
+ private:
+  void OnPaint(wxPaintEvent& event);
+  void OnResize(wxSizeEvent& event);
 
-public:
-	FractalRenderPanel(wxWindow *parent);
+ public:
+  explicit FractalRenderPanel(wxWindow *parent);
 
-	wxDECLARE_EVENT_TABLE();
+  wxDECLARE_EVENT_TABLE();
 };
 
-#endif
+#endif  // INCLUDE_FRACTAL_RENDER_PANEL_H_

@@ -17,7 +17,7 @@
 
 #if wxUSE_VALIDATORS && (wxUSE_TEXTCTRL || wxUSE_COMBOBOX)
 
-#include "regex_validator.h"
+#include "../include/regex_validator.h"
 
 #ifndef WX_PRECOMP
 #include <stdio.h>

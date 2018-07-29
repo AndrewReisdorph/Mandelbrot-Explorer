@@ -20,9 +20,10 @@
 
 #include <ctime>
 
-#include "waves_palette_panel.h"
+#include "../include/waves_palette_panel.h"
 
-using namespace std;
+using std::cout;
+using std::endl;
 
 WavesPalettePanel::WavesPalettePanel(wxWindow * parent) : wxPanel(parent) {
   color_mapper_ = new WavesColorMapper();
@@ -85,7 +86,6 @@ ChannelGraphPanel::ChannelGraphPanel(
 }
 
 void ChannelGraphPanel::OnPaint(wxPaintEvent& event) {
-
   wxAutoBufferedPaintDC dc(this);
   wxBrush background_brush = wxBrush(wxColour(0, 12, 22, 255),
                                      wxBRUSHSTYLE_SOLID);
@@ -95,13 +95,12 @@ void ChannelGraphPanel::OnPaint(wxPaintEvent& event) {
   int width = panel_size.GetWidth();
 
   // Draw background color
-  dc.DrawRectangle(wxRect(0,0, height, width));
+  dc.DrawRectangle(wxRect(0, 0, height, width));
 
   // Draw iteration colors
   double angle = 0.0;
   Color line_color;
-  for (int column_iter = 0; column_iter < width; column_iter++)
-  {
+  for (int column_iter = 0; column_iter < width; column_iter++) {
     line_color = color_mapper_->GetColor(angle);
 
     dc.SetPen(wxPen(wxColour(line_color.red, line_color.green,
@@ -119,7 +118,6 @@ ColorDisplayPanel::ColorDisplayPanel(
 }
 
 void ColorDisplayPanel::OnPaint(wxPaintEvent& event) {
-
   wxAutoBufferedPaintDC dc(this);
   wxBrush background_brush = wxBrush(wxColour(29, 30, 30, 255),
                                      wxBRUSHSTYLE_SOLID);
@@ -145,11 +143,8 @@ void ColorDisplayPanel::OnPaint(wxPaintEvent& event) {
 
   double amplitude_scale = draw_area_height / 2.0;
 
-  double next_red_angle;
   double next_red_value;
-  double next_green_angle;
   double next_green_value;
-  double next_blue_angle;
   double next_blue_value;
 
   double red_amplitude = (amplitude_scale - 1) * red_wave.amplitude;
@@ -171,10 +166,9 @@ void ColorDisplayPanel::OnPaint(wxPaintEvent& event) {
                            blue_amplitude * sin(last_blue_angle);
 
   // Because of the overhead of calling dc.SetPen, it is faster to draw each
-  // wave individually. 
-
+  // wave individually.
   angle = 0.0;
-  dc.SetPen(wxPen(wxColour(242,19,19),2));
+  dc.SetPen(wxPen(wxColour(242, 19, 19), 2));
   for (int column_iter = 0; column_iter < width; column_iter++) {
     next_red_value = amplitude_scale +
                      red_amplitude * sin(angle + red_wave.phase);

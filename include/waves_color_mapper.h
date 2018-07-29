@@ -1,4 +1,4 @@
-#// Copyright 2018 Andrew Reisdorph
+// Copyright 2018 Andrew Reisdorph
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files(the "Software"), to deal
@@ -18,31 +18,31 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
 
-#ifndef WAVES_COLOR_MAPPER_H
-#define WAVES_COLOR_MAPPER_H
+#ifndef INCLUDE_WAVES_COLOR_MAPPER_H_
+#define INCLUDE_WAVES_COLOR_MAPPER_H_
 
-#include "color_mapper.h"
+#include "./color_mapper.h"
 
 typedef struct Wave {
-	double amplitude;
-	double period;
-	double phase;
+  double amplitude;
+  double period;
+  double phase;
 } Wave;
 
-class WavesColorMapper : public ColorMapper
-{
+class WavesColorMapper : public ColorMapper {
  public:
-	WavesColorMapper();
-	void Configure(Wave red_wave, Wave green_wave, Wave blue_wave, double angle_step);
+  WavesColorMapper();
+  void Configure(Wave red_wave, Wave green_wave, Wave blue_wave,
+                 double angle_step);
   Color GetColor(uint64_t iteration, double magnitude, bool loglog);
   Color GetColor(double angle);
   void GetWaves(Wave *red, Wave *green, Wave *blue);
 
  private:
-	Wave red_wave_;
-	Wave green_wave_;
-	Wave blue_wave_;
-	double angle_step_;
+  Wave red_wave_;
+  Wave green_wave_;
+  Wave blue_wave_;
+  double angle_step_;
 };
 
-#endif
+#endif  // INCLUDE_WAVES_COLOR_MAPPER_H_
